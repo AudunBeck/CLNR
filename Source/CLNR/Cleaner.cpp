@@ -51,7 +51,7 @@ void ACleaner::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ACleaner::Move_X(float AxisValue)
 {
 	if ((Controller != NULL) && (AxisValue != 0.0f))
-	{
+ 	{
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
