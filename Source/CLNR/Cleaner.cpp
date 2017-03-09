@@ -25,14 +25,25 @@ ACleaner::ACleaner()
 void ACleaner::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	CurrentGameMode = GetWorld()->GetAuthGameMode<ACLNRGameModeBase>();
+	UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
+	CurrentGameMode->CurrentPower = CurrentGameMode->MaxPower;
+	UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
+
 }
 
 // Called every frame
 void ACleaner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (Interacting)
+	{
+		CurrentGameMode->CurrentPower -= DeltaTime * 10;
+		UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
+	}
 
+	
+		
 }
 
 // Called to bind functionality to input
@@ -79,10 +90,10 @@ void ACleaner::Move_Y(float AxisValue)
 }
 void ACleaner::InteractPressed() 
 {
-
+	Interacting = true;
 }
 void ACleaner::InteractReleased()
 {
-
+	Interacting = false;
 }
 
