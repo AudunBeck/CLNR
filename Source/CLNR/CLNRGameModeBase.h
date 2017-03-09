@@ -16,14 +16,16 @@ class CLNR_API ACLNRGameModeBase : public AGameModeBase
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
-		int maxPoints = 0;
+		int MaxPoints = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
-		int currentPoints = 0;
+		int CurrentPoints = 0;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
-		float maxPower = 100;
+		float MaxPower = 100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
-		float currentPower;
+		float CurrentPower = 0;
+
+
 };

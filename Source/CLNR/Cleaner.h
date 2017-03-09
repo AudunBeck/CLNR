@@ -3,7 +3,9 @@
 #pragma once
 
 #include "GameFramework/Character.h"
+#include "CLNRGameModeBase.h"
 #include "Cleaner.generated.h"
+
 
 UCLASS()
 class CLNR_API ACleaner : public ACharacter
@@ -30,5 +32,10 @@ public:
 	void Move_Y(float AxisValue);
 	void InteractPressed();
 	void InteractReleased();
+	bool Interacting = false;
+
+protected:
+	class ACLNRGameModeBase* CurrentGameMode;
+	
 	
 };
