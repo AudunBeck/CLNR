@@ -27,5 +27,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 		float CurrentPower = 0;
 
+	void ChangePower(float Value);
 
 };

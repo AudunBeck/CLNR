@@ -38,7 +38,7 @@ void ACleaner::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (Interacting)
 	{
-		CurrentGameMode->CurrentPower -= DeltaTime * 10;
+		CurrentGameMode->ChangePower(DeltaTime * 10);
 		UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
 	}
 
