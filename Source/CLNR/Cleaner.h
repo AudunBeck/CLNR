@@ -32,6 +32,11 @@ public:
 	void Move_Y(float AxisValue);
 	void InteractPressed();
 	void InteractReleased();
+	void Kit1();
+	void Kit2();
+	void Kit3();
+	int KitNumber;
+	float DrainMultiplier = 1;
 
 	
 

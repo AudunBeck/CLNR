@@ -38,7 +38,7 @@ void ACleaner::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (Interacting)
 	{
-		CurrentGameMode->ChangePower(DeltaTime * 10);
+		CurrentGameMode->ChangePower(DeltaTime * 10 * DrainMultiplier);
 	}
 	if (MovingX || MovingY)
 	{
@@ -56,10 +56,13 @@ void ACleaner::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	InputComponent->BindAction("Interact", IE_Pressed, this, &ACleaner::InteractPressed);
 	InputComponent->BindAction("Interact", IE_Released, this, &ACleaner::InteractReleased);
+	InputComponent->BindAction("Kit1", IE_Pressed, this, &ACleaner::Kit1);
+	InputComponent->BindAction("Kit2", IE_Pressed, this, &ACleaner::Kit2);
+	InputComponent->BindAction("Kit3", IE_Pressed, this, &ACleaner::Kit3);
 
 	InputComponent->BindAxis("Move_X", this, &ACleaner::Move_X);
 	InputComponent->BindAxis("Move_Y", this, &ACleaner::Move_Y);
-
+	
 }
 
 void ACleaner::Move_X(float AxisValue)
@@ -107,4 +110,38 @@ void ACleaner::InteractReleased()
 	Interacting = false;
 	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed * 2;
 }
+
+void ACleaner::Kit1()
+{
+	if (!Interacting)
+	{
+		KitNumber = 1;
+		DrainMultiplier = 1;
+		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
+	}
+	
+}
+
+void ACleaner::Kit2()
+{
+	if (!Interacting)
+	{
+		KitNumber = 2;
+		DrainMultiplier = 1.5;
+		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
+	}
+	
+}
+void ACleaner::Kit3()
+{
+	if (!Interacting)
+	{
+		KitNumber = 3;
+		DrainMultiplier = 3;
+		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
+	}
+	
+}
+
+
 
