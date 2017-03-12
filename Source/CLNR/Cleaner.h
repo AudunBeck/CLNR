@@ -32,10 +32,17 @@ public:
 	void Move_Y(float AxisValue);
 	void InteractPressed();
 	void InteractReleased();
-	bool Interacting = false;
+
+	
 
 protected:
 	class ACLNRGameModeBase* CurrentGameMode;
+
+private: 
+
+	bool Interacting = false;
+	bool MovingX = false;
+	bool MovingY = false;
 	
 	
 };

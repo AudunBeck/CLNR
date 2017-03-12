@@ -39,7 +39,10 @@ void ACleaner::Tick(float DeltaTime)
 	if (Interacting)
 	{
 		CurrentGameMode->ChangePower(DeltaTime * 10);
-		UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
+	}
+	if (MovingX || MovingY)
+	{
+		CurrentGameMode->ChangePower(DeltaTime);
 	}
 
 	
@@ -70,7 +73,10 @@ void ACleaner::Move_X(float AxisValue)
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, AxisValue);
+		MovingX = true;
 	}
+	else
+		MovingX = false;
 
 }
 void ACleaner::Move_Y(float AxisValue)
@@ -85,15 +91,20 @@ void ACleaner::Move_Y(float AxisValue)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, AxisValue);
+		MovingY = true;
 	}
+	else
+		MovingY = false;
 
 }
 void ACleaner::InteractPressed() 
 {
 	Interacting = true;
+	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed / 2;
 }
 void ACleaner::InteractReleased()
 {
 	Interacting = false;
+	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed * 2;
 }
 
