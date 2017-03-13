@@ -143,5 +143,13 @@ void ACleaner::Kit3()
 	
 }
 
+/* Psudo-kode for activation av objekter, for å bytte utstyr eller tømme/refille utstyr (som støvsuger pose eller såpe)
+void Activate()
+{
+Når spilleren trykker "E" eller går i nærheten av et objekt som kan aktiveres, så kjører den activate funksjonen hos det objektet. Det objektet endrer "kitten"
+spilleren bruker eller tømmer/refiller pose eller såpe. Dette kan skrives her om det er en knapp som aktiverer det eller kan skrives direkte inn i objektene selv, polymorfi?
+Selve søppeltømmingen eller såpe innhold kan kodes inn i GameModBase slik at det kan lettere vises i HUD og for at det blir lettere for alle objektene å få tak idet. 
+}
+*/
 
 
