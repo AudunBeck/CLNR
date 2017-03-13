@@ -2,7 +2,7 @@
 
 #include "CLNR.h"
 #include "Cleaner.h"
-
+#include "KitTest1.h"
 
 // Sets default values
 ACleaner::ACleaner()
@@ -19,6 +19,10 @@ ACleaner::ACleaner()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 480.0f, 0.0f); // ...at this rotation rate
 	GetCharacterMovement()->JumpZVelocity = 600.f;
 	GetCharacterMovement()->AirControl = 0.2f;
+
+	Cast<UShapeComponent>(RootComponent)->bGenerateOverlapEvents = true;
+	Cast<UShapeComponent>(RootComponent)->OnComponentBeginOverlap.AddDynamic(this, &ACleaner::OnOverlap);
+	Cast<UShapeComponent>(RootComponent)->OnComponentEndOverlap.AddDynamic(this, &ACleaner::EndOnOverlap);
 }
 
 // Called when the game starts or when spawned
@@ -151,5 +155,18 @@ spilleren bruker eller tømmer/refiller pose eller såpe. Dette kan skrives her om
 Selve søppeltømmingen eller såpe innhold kan kodes inn i GameModBase slik at det kan lettere vises i HUD og for at det blir lettere for alle objektene å få tak idet. 
 }
 */
+
+void ACleaner::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	if (OtherActor->IsA(AKitTest1::StaticClass()))
+	{
+		Cast<AKitTest1>(OtherActor)->Activate();
+	}
+}
+
+void ACleaner::EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+
+}
 
 

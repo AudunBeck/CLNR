@@ -2,6 +2,24 @@
 
 #include "CLNR.h"
 #include "CLNRGameModeBase.h"
+#include "Cleaner.h"
+
+void ACLNRGameModeBase::BeginPlay()
+{
+
+	UWorld* World = GetWorld();
+	if (World)
+	{
+		
+		FVector SpawnLocation = FVector((0.f), (0.f), (0.f));
+		ACleaner *tempPlayer = World->SpawnActor<ACleaner>(CleanerBlueprint, SpawnLocation, FRotator::ZeroRotator);
+		tempPlayer->GameModePointer = this;
+		tempPlayer->PlaceInArray = ArraySize;
+		PlayerArray.Add(tempPlayer);
+		ArraySize++;
+	}
+
+}
 
 void ACLNRGameModeBase::ChangePower(float Value)
 {

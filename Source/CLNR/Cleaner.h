@@ -38,6 +38,16 @@ public:
 	int KitNumber;
 	float DrainMultiplier = 1;
 
+	UFUNCTION()
+		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+
+	UFUNCTION()
+		void EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	
+
+	AGameModeBase *GameModePointer;
+	int PlaceInArray{ 0 };
+
 	
 
 protected:
