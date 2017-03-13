@@ -44,6 +44,8 @@ public:
 	UFUNCTION()
 		void EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+		float Kit1MaxValue = 100; //Value er for vann/såpe til mopp.
 
 	AGameModeBase *GameModePointer;
 	int PlaceInArray{ 0 };

@@ -117,18 +117,20 @@ void ACleaner::InteractReleased()
 
 void ACleaner::Kit1()
 {
-	if (!Interacting)
+	if (!Interacting && KitNumber != 1)
 	{
 		KitNumber = 1;
 		DrainMultiplier = 1;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
+		CurrentGameMode->KitMaxValue = Kit1MaxValue;
+		CurrentGameMode->KitCurrentValue = 0;
 	}
 	
 }
 
 void ACleaner::Kit2()
 {
-	if (!Interacting)
+	if (!Interacting && KitNumber != 2)
 	{
 		KitNumber = 2;
 		DrainMultiplier = 1.5;
@@ -138,7 +140,7 @@ void ACleaner::Kit2()
 }
 void ACleaner::Kit3()
 {
-	if (!Interacting)
+	if (!Interacting && KitNumber != 3)
 	{
 		KitNumber = 3;
 		DrainMultiplier = 3;

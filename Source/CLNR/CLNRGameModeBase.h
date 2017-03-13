@@ -17,8 +17,6 @@ class CLNR_API ACLNRGameModeBase : public AGameModeBase
 	
 public:
 
-	virtual void BeginPlay() override;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 		int MaxPoints = 0;
 
@@ -31,13 +29,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 		float CurrentPower = 0;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+		float KitMaxValue = 0; //Value er for støvsugerpose eller vann/såpe i vaskebøtte.
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+		float KitCurrentValue = 0;
+
 	void ChangePower(float Value);
-
-	UPROPERTY(EditAnywhere, Category = "Spawning Player")
-		TSubclassOf<class ACleaner> CleanerBlueprint;
-
-	TArray<ACleaner*> PlayerArray;
-	int ArraySize;
-
 
 };

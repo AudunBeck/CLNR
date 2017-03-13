@@ -3,6 +3,7 @@
 #include "CLNR.h"
 #include "KitTest1.h"
 #include "Cleaner.h"
+#include "CLNRGameModeBase.h"
 
 
 // Sets default values
@@ -35,5 +36,5 @@ void AKitTest1::Tick(float DeltaTime)
 
 void AKitTest1::Activate()
 {
-	Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetCharacter())->Kit1();
+	Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetCharacter())->Kit1();	
 }
