@@ -12,6 +12,8 @@ UCLASS()
 class CLNR_API ACLNRGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+
+
 	
 public:
 
@@ -26,6 +28,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 		float CurrentPower = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+		float KitMaxValue = 0; //Value er for støvsugerpose eller vann/såpe i vaskebøtte.
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+		float KitCurrentValue = 0;
 
 	void ChangePower(float Value);
 

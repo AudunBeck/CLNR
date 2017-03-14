@@ -2,7 +2,7 @@
 
 #include "CLNR.h"
 #include "Cleaner.h"
-
+#include "KitTest1.h"
 
 // Sets default values
 ACleaner::ACleaner()
@@ -19,6 +19,10 @@ ACleaner::ACleaner()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 480.0f, 0.0f); // ...at this rotation rate
 	GetCharacterMovement()->JumpZVelocity = 600.f;
 	GetCharacterMovement()->AirControl = 0.2f;
+
+	Cast<UShapeComponent>(RootComponent)->bGenerateOverlapEvents = true;
+	Cast<UShapeComponent>(RootComponent)->OnComponentBeginOverlap.AddDynamic(this, &ACleaner::OnOverlap);
+	Cast<UShapeComponent>(RootComponent)->OnComponentEndOverlap.AddDynamic(this, &ACleaner::EndOnOverlap);
 }
 
 // Called when the game starts or when spawned
@@ -38,8 +42,11 @@ void ACleaner::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (Interacting)
 	{
-		CurrentGameMode->ChangePower(DeltaTime * 10);
-		UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
+		CurrentGameMode->ChangePower(DeltaTime * 10 * DrainMultiplier);
+	}
+	if (MovingX || MovingY)
+	{
+		CurrentGameMode->ChangePower(DeltaTime);
 	}
 
 	
@@ -53,10 +60,13 @@ void ACleaner::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	InputComponent->BindAction("Interact", IE_Pressed, this, &ACleaner::InteractPressed);
 	InputComponent->BindAction("Interact", IE_Released, this, &ACleaner::InteractReleased);
+	InputComponent->BindAction("Kit1", IE_Pressed, this, &ACleaner::Kit1);
+	InputComponent->BindAction("Kit2", IE_Pressed, this, &ACleaner::Kit2);
+	InputComponent->BindAction("Kit3", IE_Pressed, this, &ACleaner::Kit3);
 
 	InputComponent->BindAxis("Move_X", this, &ACleaner::Move_X);
 	InputComponent->BindAxis("Move_Y", this, &ACleaner::Move_Y);
-
+	
 }
 
 void ACleaner::Move_X(float AxisValue)
@@ -70,7 +80,10 @@ void ACleaner::Move_X(float AxisValue)
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, AxisValue);
+		MovingX = true;
 	}
+	else
+		MovingX = false;
 
 }
 void ACleaner::Move_Y(float AxisValue)
@@ -85,15 +98,77 @@ void ACleaner::Move_Y(float AxisValue)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, AxisValue);
+		MovingY = true;
 	}
+	else
+		MovingY = false;
 
 }
 void ACleaner::InteractPressed() 
 {
 	Interacting = true;
+	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed / 2;
 }
 void ACleaner::InteractReleased()
 {
 	Interacting = false;
+	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed * 2;
 }
+
+void ACleaner::Kit1()
+{
+	if (!Interacting && KitNumber != 1)
+	{
+		KitNumber = 1;
+		DrainMultiplier = 1;
+		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
+		CurrentGameMode->KitMaxValue = Kit1MaxValue;
+		CurrentGameMode->KitCurrentValue = 0;
+	}
+	
+}
+
+void ACleaner::Kit2()
+{
+	if (!Interacting && KitNumber != 2)
+	{
+		KitNumber = 2;
+		DrainMultiplier = 1.5;
+		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
+	}
+	
+}
+void ACleaner::Kit3()
+{
+	if (!Interacting && KitNumber != 3)
+	{
+		KitNumber = 3;
+		DrainMultiplier = 3;
+		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
+	}
+	
+}
+
+/* Psudo-kode for activation av objekter, for å bytte utstyr eller tømme/refille utstyr (som støvsuger pose eller såpe)
+void Activate()
+{
+Når spilleren trykker "E" eller går i nærheten av et objekt som kan aktiveres, så kjører den activate funksjonen hos det objektet. Det objektet endrer "kitten"
+spilleren bruker eller tømmer/refiller pose eller såpe. Dette kan skrives her om det er en knapp som aktiverer det eller kan skrives direkte inn i objektene selv, polymorfi?
+Selve søppeltømmingen eller såpe innhold kan kodes inn i GameModBase slik at det kan lettere vises i HUD og for at det blir lettere for alle objektene å få tak idet. 
+}
+*/
+
+void ACleaner::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	if (OtherActor->IsA(AKitTest1::StaticClass()))
+	{
+		Cast<AKitTest1>(OtherActor)->Activate();
+	}
+}
+
+void ACleaner::EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+
+}
+
 

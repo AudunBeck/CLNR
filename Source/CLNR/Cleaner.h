@@ -32,10 +32,34 @@ public:
 	void Move_Y(float AxisValue);
 	void InteractPressed();
 	void InteractReleased();
-	bool Interacting = false;
+	void Kit1();
+	void Kit2();
+	void Kit3();
+	int KitNumber;
+	float DrainMultiplier = 1;
+
+	UFUNCTION()
+		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+
+	UFUNCTION()
+		void EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+		float Kit1MaxValue = 100; //Value er for vann/såpe til mopp.
+
+	AGameModeBase *GameModePointer;
+	int PlaceInArray{ 0 };
+
+	
 
 protected:
 	class ACLNRGameModeBase* CurrentGameMode;
+
+private: 
+
+	bool Interacting = false;
+	bool MovingX = false;
+	bool MovingY = false;
 	
 	
 };
