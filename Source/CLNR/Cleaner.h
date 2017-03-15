@@ -4,6 +4,7 @@
 
 #include "GameFramework/Character.h"
 #include "CLNRGameModeBase.h"
+#include "KitTest1.h"
 #include "Cleaner.generated.h"
 
 
@@ -35,6 +36,7 @@ public:
 	void Kit1();
 	void Kit2();
 	void Kit3();
+	void SwitchKit();
 	int KitNumber;
 	float DrainMultiplier = 1;
 
@@ -60,6 +62,8 @@ private:
 	bool Interacting = false;
 	bool MovingX = false;
 	bool MovingY = false;
+	bool OnKitSwitch = false;
+	AKitTest1* KitActor;
 	
 	
 };

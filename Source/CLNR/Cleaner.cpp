@@ -2,7 +2,7 @@
 
 #include "CLNR.h"
 #include "Cleaner.h"
-#include "KitTest1.h"
+
 
 // Sets default values
 ACleaner::ACleaner()
@@ -63,6 +63,7 @@ void ACleaner::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAction("Kit1", IE_Pressed, this, &ACleaner::Kit1);
 	InputComponent->BindAction("Kit2", IE_Pressed, this, &ACleaner::Kit2);
 	InputComponent->BindAction("Kit3", IE_Pressed, this, &ACleaner::Kit3);
+	InputComponent->BindAction("KitInteract", IE_Pressed, this, &ACleaner::SwitchKit);
 
 	InputComponent->BindAxis("Move_X", this, &ACleaner::Move_X);
 	InputComponent->BindAxis("Move_Y", this, &ACleaner::Move_Y);
@@ -93,7 +94,6 @@ void ACleaner::Move_Y(float AxisValue)
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
@@ -124,8 +124,8 @@ void ACleaner::Kit1()
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
 		CurrentGameMode->KitMaxValue = Kit1MaxValue;
 		CurrentGameMode->KitCurrentValue = 0;
+		CurrentGameMode->KitInUse = "Kit1";
 	}
-	
 }
 
 void ACleaner::Kit2()
@@ -135,8 +135,8 @@ void ACleaner::Kit2()
 		KitNumber = 2;
 		DrainMultiplier = 1.5;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
+		CurrentGameMode->KitInUse = "Kit2";
 	}
-	
 }
 void ACleaner::Kit3()
 {
@@ -145,8 +145,8 @@ void ACleaner::Kit3()
 		KitNumber = 3;
 		DrainMultiplier = 3;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
-	}
-	
+		CurrentGameMode->KitInUse = "Kit3";
+	}	
 }
 
 /* Psudo-kode for activation av objekter, for å bytte utstyr eller tømme/refille utstyr (som støvsuger pose eller såpe)
@@ -162,13 +162,27 @@ void ACleaner::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *Other
 {
 	if (OtherActor->IsA(AKitTest1::StaticClass()))
 	{
-		Cast<AKitTest1>(OtherActor)->Activate();
+		KitActor = Cast<AKitTest1>(OtherActor); //Caster AKitTest1 slik at den kan aktiveres når spilleren trykker E, men bare når han står på den.
+		OnKitSwitch = true;
 	}
 }
 
 void ACleaner::EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	if (OtherActor->IsA(AKitTest1::StaticClass()))
+	{
+		KitActor = nullptr;
+		OnKitSwitch = false;
+	}
+	
+}
 
+void ACleaner::SwitchKit()
+{
+	if (OnKitSwitch)
+	{
+		KitActor->Activate();
+	}
 }
 
 

@@ -35,6 +35,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 		float KitCurrentValue = 0;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+		FString KitInUse = "Kit1";
+
 	void ChangePower(float Value);
 
 };
