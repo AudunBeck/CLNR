@@ -39,6 +39,7 @@ public:
 	void SwitchKit();
 	int KitNumber;
 	float DrainMultiplier = 1;
+	bool Interacting = false;
 
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
@@ -59,7 +60,6 @@ protected:
 
 private: 
 
-	bool Interacting = false;
 	bool MovingX = false;
 	bool MovingY = false;
 	bool OnKitSwitch = false;
