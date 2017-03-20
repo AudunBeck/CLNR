@@ -42,7 +42,7 @@ void ACleaner::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (Interacting)
 	{
-		CurrentGameMode->ChangePower(DeltaTime * 10 * DrainMultiplier);
+		CurrentGameMode->ChangePower(DeltaTime * DrainMultiplier);
 	}
 	if (MovingX || MovingY)
 	{
@@ -120,7 +120,7 @@ void ACleaner::Kit1()
 	if (!Interacting && KitNumber != 1)
 	{
 		KitNumber = 1;
-		DrainMultiplier = 1;
+		DrainMultiplier = 3;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
 		CurrentGameMode->KitMaxValue = Kit1MaxValue;
 		CurrentGameMode->KitCurrentValue = 0;
@@ -133,7 +133,7 @@ void ACleaner::Kit2()
 	if (!Interacting && KitNumber != 2)
 	{
 		KitNumber = 2;
-		DrainMultiplier = 1.5;
+		DrainMultiplier = 4;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
 		CurrentGameMode->KitInUse = "Kit2";
 	}
@@ -143,7 +143,7 @@ void ACleaner::Kit3()
 	if (!Interacting && KitNumber != 3)
 	{
 		KitNumber = 3;
-		DrainMultiplier = 3;
+		DrainMultiplier = 5;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
 		CurrentGameMode->KitInUse = "Kit3";
 	}	
