@@ -120,7 +120,7 @@ void ACleaner::Kit1()
 	if (!Interacting && KitNumber != 1)
 	{
 		KitNumber = 1;
-		DrainMultiplier = 3;
+		DrainMultiplier = 1.5;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
 		CurrentGameMode->KitMaxValue = Kit1MaxValue;
 		CurrentGameMode->KitCurrentValue = 0;
@@ -133,7 +133,7 @@ void ACleaner::Kit2()
 	if (!Interacting && KitNumber != 2)
 	{
 		KitNumber = 2;
-		DrainMultiplier = 4;
+		DrainMultiplier = 2;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
 		CurrentGameMode->KitInUse = "Kit2";
 	}
@@ -143,20 +143,12 @@ void ACleaner::Kit3()
 	if (!Interacting && KitNumber != 3)
 	{
 		KitNumber = 3;
-		DrainMultiplier = 5;
+		DrainMultiplier = 3;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
 		CurrentGameMode->KitInUse = "Kit3";
 	}	
 }
 
-/* Psudo-kode for activation av objekter, for å bytte utstyr eller tømme/refille utstyr (som støvsuger pose eller såpe)
-void Activate()
-{
-Når spilleren trykker "E" eller går i nærheten av et objekt som kan aktiveres, så kjører den activate funksjonen hos det objektet. Det objektet endrer "kitten"
-spilleren bruker eller tømmer/refiller pose eller såpe. Dette kan skrives her om det er en knapp som aktiverer det eller kan skrives direkte inn i objektene selv, polymorfi?
-Selve søppeltømmingen eller såpe innhold kan kodes inn i GameModBase slik at det kan lettere vises i HUD og for at det blir lettere for alle objektene å få tak idet. 
-}
-*/
 
 void ACleaner::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {

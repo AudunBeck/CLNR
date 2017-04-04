@@ -54,7 +54,8 @@ void AGunk::Tick(float DeltaTime)
 		GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
 		Destroy();
 	}
-	SetActorScale3D(FVector(AmountLeft / 100, AmountLeft / 100, AmountLeft / 100));
+	//SetActorScale3D(FVector(AmountLeft / 100, AmountLeft / 100, AmountLeft / 100));
+	OurVisibleComponent->SetWorldScale3D(FVector(AmountLeft / 100, AmountLeft / 100, AmountLeft / 100));
 }
 
 void AGunk::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
