@@ -36,5 +36,19 @@ void AKitTest1::Tick(float DeltaTime)
 
 void AKitTest1::Activate()
 {
-	Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetCharacter())->Kit1();	
+	ACleaner* Player = Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetCharacter());
+
+	if (KitChange == 1)
+		Player->Kit1();
+
+	else if (KitChange == 2)
+		Player->Kit2();
+
+	else if (KitChange == 3)
+		Player->Kit3();
+
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ERROR: Kit set to %i, this does not exist."), KitChange);
+	}
 }

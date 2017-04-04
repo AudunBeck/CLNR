@@ -20,6 +20,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		USphereComponent* SphereComponent;
 
+	UPROPERTY(EditAnywhere)
+		int KitChange;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
