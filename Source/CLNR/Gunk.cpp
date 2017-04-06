@@ -44,18 +44,20 @@ void AGunk::Tick(float DeltaTime)
 		ACleaner* Player = Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn());
 		if (Player->Interacting == true && Player->KitNumber == Type)
 		{
-			AmountLeft -= DeltaTime * 30;
+			TimeToRemove -= DeltaTime;
+			SizeLeft -= DeltaTime *30;
+			OurVisibleComponent->SetWorldScale3D(FVector(SizeLeft / 100, SizeLeft / 100, SizeLeft / 100));
 		}
 	}
 
 
-	if (AmountLeft <= 10)
+	if (TimeToRemove <= 0)
 	{
 		GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
 		Destroy();
 	}
 	//SetActorScale3D(FVector(AmountLeft / 100, AmountLeft / 100, AmountLeft / 100));
-	OurVisibleComponent->SetWorldScale3D(FVector(AmountLeft / 100, AmountLeft / 100, AmountLeft / 100));
+	
 }
 
 void AGunk::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
