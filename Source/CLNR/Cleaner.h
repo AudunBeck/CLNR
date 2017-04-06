@@ -50,6 +50,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 		float Kit1MaxValue = 100; //Value er for vann/såpe til mopp.
 
+	UPROPERTY(EditAnywhere)
+		float Movementspeed = 600;
+
 	AGameModeBase *GameModePointer;
 	int PlaceInArray{ 0 };
 

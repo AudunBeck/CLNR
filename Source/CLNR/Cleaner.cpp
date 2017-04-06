@@ -33,6 +33,7 @@ void ACleaner::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
 	CurrentGameMode->CurrentPower = CurrentGameMode->MaxPower;
 	UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
+	GetCharacterMovement()->MaxWalkSpeed = Movementspeed;
 
 }
 
@@ -107,12 +108,12 @@ void ACleaner::Move_Y(float AxisValue)
 void ACleaner::InteractPressed() 
 {
 	Interacting = true;
-	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed / 2;
+	GetCharacterMovement()->MaxWalkSpeed = Movementspeed / 2;
 }
 void ACleaner::InteractReleased()
 {
 	Interacting = false;
-	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed * 2;
+	GetCharacterMovement()->MaxWalkSpeed = Movementspeed;
 }
 
 void ACleaner::Kit1()
@@ -120,7 +121,7 @@ void ACleaner::Kit1()
 	if (!Interacting && KitNumber != 1)
 	{
 		KitNumber = 1;
-		DrainMultiplier = 1.5;
+		DrainMultiplier = 2;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
 		CurrentGameMode->KitMaxValue = Kit1MaxValue;
 		CurrentGameMode->KitCurrentValue = 0;
