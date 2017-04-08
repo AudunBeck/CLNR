@@ -35,7 +35,7 @@ public:
 		void EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	
 	UPROPERTY(EditAnywhere)
-		float TimeToRemove = 3; //Time it takes to remove the object while "interacting" with it. (In seconds)
+		float AmountLeft = 100;
 
 	UPROPERTY(EditAnywhere)
 		int Type = 1; //What type of kit needs to be used.
@@ -44,7 +44,6 @@ public:
 
 
 	bool OverlapPlayer = false;
-	float SizeLeft = 100;
 	
 	
 };
