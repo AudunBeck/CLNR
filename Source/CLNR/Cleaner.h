@@ -53,6 +53,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		float Movementspeed = 600;
 
+
 	AGameModeBase *GameModePointer;
 	int PlaceInArray{ 0 };
 
