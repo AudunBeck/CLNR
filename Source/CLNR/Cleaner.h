@@ -5,6 +5,7 @@
 #include "GameFramework/Character.h"
 #include "CLNRGameModeBase.h"
 #include "KitTest1.h"
+#include "PowerSwitch.h"
 #include "Cleaner.generated.h"
 
 
@@ -67,7 +68,9 @@ private:
 	bool MovingX = false;
 	bool MovingY = false;
 	bool OnKitSwitch = false;
+	bool OnPowerSwitch = false;
 	AKitTest1* KitActor;
+	APowerSwitch* PowerSwitch;
 	
 	
 };

@@ -158,6 +158,11 @@ void ACleaner::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *Other
 		KitActor = Cast<AKitTest1>(OtherActor); //Caster AKitTest1 slik at den kan aktiveres når spilleren trykker E, men bare når han står på den.
 		OnKitSwitch = true;
 	}
+	else if (OtherActor->IsA(APowerSwitch::StaticClass()))
+	{
+		PowerSwitch = Cast<APowerSwitch>(OtherActor);
+		OnPowerSwitch = true;
+	}
 }
 
 void ACleaner::EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
@@ -167,7 +172,11 @@ void ACleaner::EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 		KitActor = nullptr;
 		OnKitSwitch = false;
 	}
-	
+	else if (OtherActor->IsA(APowerSwitch::StaticClass()))
+	{
+		PowerSwitch = nullptr;
+		OnPowerSwitch = false;
+	}
 }
 
 void ACleaner::SwitchKit()
@@ -175,6 +184,11 @@ void ACleaner::SwitchKit()
 	if (OnKitSwitch)
 	{
 		KitActor->Activate();
+	}
+	
+	else if (OnPowerSwitch) //Dette må skrives om til polymorfi.
+	{
+		PowerSwitch->Activate();
 	}
 }
 
