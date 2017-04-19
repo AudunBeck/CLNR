@@ -27,14 +27,8 @@ void AStoev::Tick(float DeltaTime)
 		{
 			FVector Velocity = (DistancePlayerToThis * Speed * DeltaTime);
 			SetActorLocation(GetActorLocation() + Velocity);
-		}
-		
-			
-			
-	}
-	
-
-	
+		}			
+	}	
 }
 
 void AStoev::PlayerInteracting(float DeltaTime)
