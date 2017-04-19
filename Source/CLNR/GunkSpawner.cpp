@@ -23,7 +23,7 @@ void AGunkSpawner::PowerOn()
 {
 	UWorld* World = GetWorld();
 
-	if (GettingPower)
+	if (GettingPower && TurnedOn)
 	{
 		if (ContainGunk)
 		{

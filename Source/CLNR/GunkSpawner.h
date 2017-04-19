@@ -28,9 +28,15 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Spawning")
 		TSubclassOf<class AGunk> GunkBlueprint;
-	
-	bool ContainGunk = true;
-	bool GettingPower = true;
+
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+		bool ContainGunk = true;
+
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+		bool GettingPower = false;
+
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+		bool TurnedOn = false;
 
 	void PowerOn();
 };

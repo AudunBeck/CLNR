@@ -37,6 +37,7 @@ void APowerSwitch::Activate() // Må skrives om til Polymorfi for KitTest1 og Pow
 	UE_LOG(LogTemp, Warning, TEXT("Using PowerSwitch %i"), 0);
 	if (TargetActor->IsA(AGunkSpawner::StaticClass()) && TargetActor!= nullptr)
 	{
+		TargetActor->TurnedOn = !TargetActor->TurnedOn;
 		TargetActor->PowerOn();
 	}
 }
