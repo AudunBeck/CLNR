@@ -4,6 +4,7 @@
 
 #include "Gunk.h"
 #include "GunkSpawner.h"
+#include "PowerSwitch.h"
 #include "Sveising.generated.h"
 
 /**
@@ -16,12 +17,27 @@ class CLNR_API ASveising : public AGunk
 	
 public:
 
+	ASveising();
+
 	UPROPERTY(EditAnywhere, Category = "Powered to")
 		AGunkSpawner* TargetActor;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		USkeletalMeshComponent* OurAnimatedComponent;
+
+	UPROPERTY(EditAnywhere)
+		UAnimSequence* AnimOpen;
+
+	UPROPERTY(EditAnywhere)
+		UAnimSequence* AnimClosed;
+
+	UPROPERTY(EditAnywhere)
+		APowerSwitch* ConnectedSwitch;
 	
 	
 	virtual void PlayerInteracting(float DeltaTime) override;
 	virtual void PlayerDone() override;
-	
+
+	virtual void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) override;
+	virtual void EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)override;
 };
