@@ -11,7 +11,7 @@ void ACLNRGameModeBase::ChangePower(float Value)
 	if ((CurrentPower - Value) <= 0)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No Power left!"));
-		UGameplayStatics::OpenLevel(GetWorld(), FName("Level_1_Test"));
+		UGameplayStatics::OpenLevel(GetWorld(), FName("Cafe"));
 		return;
 			
 	}
@@ -21,7 +21,7 @@ void ACLNRGameModeBase::ChangePower(float Value)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("You won, script for winning goes here!"));
 		Cast<UMyGameInstance>(GetGameInstance())->GameScore += CurrentPoints;
-		UGameplayStatics::OpenLevel(GetWorld(), FName("Level_2_Test"));
+		UGameplayStatics::OpenLevel(GetWorld(), FName("Cafe"));
 
 	}
 	

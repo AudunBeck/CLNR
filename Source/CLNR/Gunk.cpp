@@ -43,7 +43,10 @@ void AGunk::Tick(float DeltaTime)
 
 	if (OverlapPlayer == true)
 	{
-		ACleaner* Player = Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn());
+		ACleaner* Player = nullptr;
+		if (Player == nullptr)
+			Player = Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn());
+
 		if (Player->Interacting == true && Player->KitNumber == Type)
 		{
 			PlayerInteracting(DeltaTime);

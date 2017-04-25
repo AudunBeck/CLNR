@@ -158,7 +158,7 @@ void ACleaner::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *Other
 	}
 	else if (OtherActor->IsA(APowerSwitch::StaticClass()))
 	{
-		PowerSwitch = Cast<APowerSwitch>(OtherActor);
+		PowerSwitch = Cast<APowerSwitch>(OtherActor); //Kan potensielt legge disse til å komme fra samme class file, slik Gunk, sveising og støv er. (Dette er nedprioritert)
 		OnPowerSwitch = true;
 	}
 }

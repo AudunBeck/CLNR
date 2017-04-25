@@ -14,14 +14,39 @@ public:
 	// Sets default values for this actor's properties
 	AGunkSpawner();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		USkeletalMeshComponent* OurAnimatedComponent;
+
 	UPROPERTY(EditAnywhere)
-		USceneComponent* OurVisibleComponent;
+		UAnimSequence* AnimOpen;
 
 	UPROPERTY(EditAnywhere)
 		UBoxComponent* BoxComponent;
 
-	UPROPERTY(EditAnywhere)
+	UFUNCTION()
+		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+
+	UFUNCTION()
+		void EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+
+	UPROPERTY(EditAnywhere, Category = "Spawning")
 		int GunkAmount = 4;
+
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+		float RandomRangeTop = 50;
+
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+		float RandomRangeBot = -50;
+
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+		float DistanceToFloor = -20;
+
+	virtual void Tick(float DeltaTime) override;
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 
 
 public:	
@@ -38,5 +63,14 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Spawning")
 		bool TurnedOn = false;
 
+	UPROPERTY(EditAnywhere, Category = "TextureChange")
+		UMaterial* Filled;
+
+	UPROPERTY(EditAnywhere, Category = "TextureChange")
+		UMaterial* Empty;
+
+	
 	void PowerOn();
+
+	bool OverlapPlayer = false;
 };

@@ -54,9 +54,9 @@ void ASveising::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *Othe
 void ASveising::EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 
-	if (ConnectedSwitch == nullptr)
+	if (ConnectedSwitch == nullptr || TargetActor == nullptr)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Found no target actor on Sveising, for Switch!%i"), 0);
+		UE_LOG(LogTemp, Warning, TEXT("Missing ConnectedSwitch or TargetActor%i"), 0);
 	}
 
 	else if (OtherActor->IsA(ACleaner::StaticClass()) && !ConnectedSwitch->SwitchedOn)
