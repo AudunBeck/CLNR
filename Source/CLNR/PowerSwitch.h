@@ -15,8 +15,8 @@ public:
 	// Sets default values for this actor's properties
 	APowerSwitch();
 
-	UPROPERTY(EditAnywhere)
-		USceneComponent* OurVisibleComponent;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		USkeletalMeshComponent* OurVisibleComponent;
 
 	UPROPERTY(EditAnywhere)
 		UBoxComponent* BoxComponent;
@@ -32,7 +32,14 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Powered to")
 		AGunkSpawner* TargetActor;
 
-	bool Power = true;
+	bool SwitchedOn = true;
+
+
+	UPROPERTY(EditAnywhere)
+		UAnimSequence* AnimOn;
+
+	UPROPERTY(EditAnywhere)
+		UAnimSequence* AnimOff;
 	
 	void Activate();
 };

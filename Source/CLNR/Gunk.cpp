@@ -30,8 +30,10 @@ AGunk::AGunk()
 void AGunk::BeginPlay()
 {
 	Super::BeginPlay();
+	TimeLeft = TimeLeft*1.1;
+	TotalTime = TimeLeft;
 	GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->MaxPoints += 1;
-
+	OurVisibleComponent->SetWorldScale3D(FVector(TimeLeft / TotalTime, TimeLeft / TotalTime, TimeLeft / TotalTime));
 }
 
 // Called every frame
@@ -44,17 +46,16 @@ void AGunk::Tick(float DeltaTime)
 		ACleaner* Player = Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn());
 		if (Player->Interacting == true && Player->KitNumber == Type)
 		{
-			AmountLeft -= DeltaTime * 30;
+			PlayerInteracting(DeltaTime);
 		}
 	}
 
 
-	if (AmountLeft <= 10)
+	if (TimeLeft <= TotalTime/10)
 	{
-		GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
-		Destroy();
+		PlayerDone();
 	}
-	OurVisibleComponent->SetWorldScale3D(FVector(AmountLeft / 100, AmountLeft / 100, AmountLeft / 100));
+	
 }
 
 void AGunk::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
@@ -73,5 +74,18 @@ void AGunk::EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		OverlapPlayer = false;
 	}
 
+}
+
+void AGunk::PlayerInteracting(float DeltaTime)
+{
+	TimeLeft -= DeltaTime;
+	OurVisibleComponent->SetWorldScale3D(FVector(TimeLeft / TotalTime, TimeLeft / TotalTime, TimeLeft / TotalTime));
+	
+}
+
+void AGunk::PlayerDone()
+{
+	GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
+	Destroy();
 }
 

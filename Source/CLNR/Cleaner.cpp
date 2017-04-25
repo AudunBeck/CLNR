@@ -30,9 +30,7 @@ void ACleaner::BeginPlay()
 {
 	Super::BeginPlay();
 	CurrentGameMode = GetWorld()->GetAuthGameMode<ACLNRGameModeBase>();
-	UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
 	CurrentGameMode->CurrentPower = CurrentGameMode->MaxPower;
-	UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
 	GetCharacterMovement()->MaxWalkSpeed = Movementspeed;
 
 }

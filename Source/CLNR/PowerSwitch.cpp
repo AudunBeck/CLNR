@@ -14,7 +14,7 @@ APowerSwitch::APowerSwitch()
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
 	RootComponent = BoxComponent;
 
-	OurVisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("OurVisibleComponent"));
+	OurVisibleComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("OurVisibleComponent"));
 	OurVisibleComponent->SetupAttachment(RootComponent);
 }
 
@@ -35,9 +35,27 @@ void APowerSwitch::Tick(float DeltaTime)
 void APowerSwitch::Activate() // Må skrives om til Polymorfi for KitTest1 og PowerSwitch
 {
 	UE_LOG(LogTemp, Warning, TEXT("Using PowerSwitch %i"), 0);
-	if (TargetActor->IsA(AGunkSpawner::StaticClass()) && TargetActor!= nullptr)
+
+	if (SwitchedOn)
 	{
-		TargetActor->PowerOn();
+		OurVisibleComponent->PlayAnimation(AnimOn, 0);
+		SwitchedOn = false;
+		OurVisibleComponent->SetPosition(0, true);
 	}
+		
+	else if (!SwitchedOn)
+	{
+		OurVisibleComponent->PlayAnimation(AnimOff, 0);
+		SwitchedOn = true;
+		OurVisibleComponent->SetPosition(1, true);
+
+		if (TargetActor->IsA(AGunkSpawner::StaticClass()) && TargetActor != nullptr)
+		{
+			TargetActor->TurnedOn = !TargetActor->TurnedOn;
+			TargetActor->PowerOn();
+		}
+	}
+		
+	
 }
 

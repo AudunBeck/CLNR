@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
 #include "Gunk.generated.h"
 
 UCLASS()
-class CLNR_API AGunk : public AActor
+class CLNR_API AGunk : public APawn
 {
 	GENERATED_BODY()
 	
@@ -29,16 +29,21 @@ public:
 		USphereComponent* SphereComponent;
 
 	UFUNCTION()
-		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+		virtual void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 
 	UFUNCTION()
-		void EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+		virtual void EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	
 	UPROPERTY(EditAnywhere)
-		float AmountLeft = 100;
+		float TimeLeft = 2;
+
+	float TotalTime;
 
 	UPROPERTY(EditAnywhere)
 		int Type = 1; //What type of kit needs to be used.
+
+	virtual void PlayerInteracting(float DeltaTime);
+	virtual void PlayerDone();
 
 
 

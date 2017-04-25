@@ -16,7 +16,6 @@ void ACLNRGameModeBase::ChangePower(float Value)
 			
 	}
 	CurrentPower -= Value;
-	UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentPower);
 
 	if (CurrentPoints == MaxPoints)
 	{
