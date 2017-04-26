@@ -33,6 +33,8 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		APowerSwitch* ConnectedSwitch;
+
+	bool Done = false; //Quick fix.
 	
 	
 	virtual void PlayerInteracting(float DeltaTime) override;

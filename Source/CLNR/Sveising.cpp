@@ -29,9 +29,16 @@ void ASveising::PlayerDone()
 	if (TargetActor->IsA(AGunkSpawner::StaticClass()) && TargetActor != nullptr)
 	{
 		TargetActor->GettingPower = true;
+		if (!Done)
+		{
+			GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
+			Done = true;
+		}
+		
+		
 	}
 
-	else
+	else if (TargetActor == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Found no target actor on Sveising %i"), 0);
 	}
