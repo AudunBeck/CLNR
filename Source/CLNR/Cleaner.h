@@ -5,6 +5,7 @@
 #include "GameFramework/Character.h"
 #include "CLNRGameModeBase.h"
 #include "KitTest1.h"
+#include "PowerSwitch.h"
 #include "Cleaner.generated.h"
 
 
@@ -39,6 +40,7 @@ public:
 	void SwitchKit();
 	int KitNumber;
 	float DrainMultiplier = 1;
+	bool Interacting = false;
 
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
@@ -48,6 +50,10 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 		float Kit1MaxValue = 100; //Value er for vann/såpe til mopp.
+
+	UPROPERTY(EditAnywhere)
+		float Movementspeed = 600;
+
 
 	AGameModeBase *GameModePointer;
 	int PlaceInArray{ 0 };
@@ -59,11 +65,12 @@ protected:
 
 private: 
 
-	bool Interacting = false;
 	bool MovingX = false;
 	bool MovingY = false;
 	bool OnKitSwitch = false;
+	bool OnPowerSwitch = false;
 	AKitTest1* KitActor;
+	APowerSwitch* PowerSwitch;
 	
 	
 };

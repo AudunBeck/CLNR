@@ -30,9 +30,8 @@ void ACleaner::BeginPlay()
 {
 	Super::BeginPlay();
 	CurrentGameMode = GetWorld()->GetAuthGameMode<ACLNRGameModeBase>();
-	UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
 	CurrentGameMode->CurrentPower = CurrentGameMode->MaxPower;
-	UE_LOG(LogTemp, Warning, TEXT("Power is set to %f"), CurrentGameMode->CurrentPower);
+	GetCharacterMovement()->MaxWalkSpeed = Movementspeed;
 
 }
 
@@ -42,7 +41,7 @@ void ACleaner::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (Interacting)
 	{
-		CurrentGameMode->ChangePower(DeltaTime * 10 * DrainMultiplier);
+		CurrentGameMode->ChangePower(DeltaTime * DrainMultiplier);
 	}
 	if (MovingX || MovingY)
 	{
@@ -107,12 +106,12 @@ void ACleaner::Move_Y(float AxisValue)
 void ACleaner::InteractPressed() 
 {
 	Interacting = true;
-	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed / 2;
+	GetCharacterMovement()->MaxWalkSpeed = Movementspeed / 2;
 }
 void ACleaner::InteractReleased()
 {
 	Interacting = false;
-	GetCharacterMovement()->MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed * 2;
+	GetCharacterMovement()->MaxWalkSpeed = Movementspeed;
 }
 
 void ACleaner::Kit1()
@@ -120,7 +119,7 @@ void ACleaner::Kit1()
 	if (!Interacting && KitNumber != 1)
 	{
 		KitNumber = 1;
-		DrainMultiplier = 1;
+		DrainMultiplier = 2;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
 		CurrentGameMode->KitMaxValue = Kit1MaxValue;
 		CurrentGameMode->KitCurrentValue = 0;
@@ -133,7 +132,7 @@ void ACleaner::Kit2()
 	if (!Interacting && KitNumber != 2)
 	{
 		KitNumber = 2;
-		DrainMultiplier = 1.5;
+		DrainMultiplier = 2;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
 		CurrentGameMode->KitInUse = "Kit2";
 	}
@@ -149,14 +148,6 @@ void ACleaner::Kit3()
 	}	
 }
 
-/* Psudo-kode for activation av objekter, for å bytte utstyr eller tømme/refille utstyr (som støvsuger pose eller såpe)
-void Activate()
-{
-Når spilleren trykker "E" eller går i nærheten av et objekt som kan aktiveres, så kjører den activate funksjonen hos det objektet. Det objektet endrer "kitten"
-spilleren bruker eller tømmer/refiller pose eller såpe. Dette kan skrives her om det er en knapp som aktiverer det eller kan skrives direkte inn i objektene selv, polymorfi?
-Selve søppeltømmingen eller såpe innhold kan kodes inn i GameModBase slik at det kan lettere vises i HUD og for at det blir lettere for alle objektene å få tak idet. 
-}
-*/
 
 void ACleaner::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
@@ -164,6 +155,11 @@ void ACleaner::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *Other
 	{
 		KitActor = Cast<AKitTest1>(OtherActor); //Caster AKitTest1 slik at den kan aktiveres når spilleren trykker E, men bare når han står på den.
 		OnKitSwitch = true;
+	}
+	else if (OtherActor->IsA(APowerSwitch::StaticClass()))
+	{
+		PowerSwitch = Cast<APowerSwitch>(OtherActor); //Kan potensielt legge disse til å komme fra samme class file, slik Gunk, sveising og støv er. (Dette er nedprioritert)
+		OnPowerSwitch = true;
 	}
 }
 
@@ -174,7 +170,11 @@ void ACleaner::EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 		KitActor = nullptr;
 		OnKitSwitch = false;
 	}
-	
+	else if (OtherActor->IsA(APowerSwitch::StaticClass()))
+	{
+		PowerSwitch = nullptr;
+		OnPowerSwitch = false;
+	}
 }
 
 void ACleaner::SwitchKit()
@@ -182,6 +182,11 @@ void ACleaner::SwitchKit()
 	if (OnKitSwitch)
 	{
 		KitActor->Activate();
+	}
+	
+	else if (OnPowerSwitch) //Dette må skrives om til polymorfi.
+	{
+		PowerSwitch->Activate();
 	}
 }
 
