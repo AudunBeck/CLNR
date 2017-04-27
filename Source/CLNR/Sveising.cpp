@@ -16,7 +16,7 @@ ASveising::ASveising()
 void ASveising::PlayerInteracting(float DeltaTime)
 {
 	//Kjør animasjon eller partikler
-	if (!TargetActor->TurnedOn && TargetActor != nullptr)
+	if (!TargetActor->TurnedOn && TargetActor != nullptr && !Done)
 	{
 		TimeLeft -= DeltaTime;
 		OurVisibleComponent->SetWorldScale3D(FVector(TimeLeft / TotalTime, TimeLeft / TotalTime, TimeLeft / TotalTime));

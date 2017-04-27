@@ -14,6 +14,9 @@ ACleaner::ACleaner()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	SpringArm->SetupAttachment(RootComponent);
+
 	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 480.0f, 0.0f); // ...at this rotation rate
@@ -32,6 +35,8 @@ void ACleaner::BeginPlay()
 	CurrentGameMode = GetWorld()->GetAuthGameMode<ACLNRGameModeBase>();
 	CurrentGameMode->CurrentPower = CurrentGameMode->MaxPower;
 	GetCharacterMovement()->MaxWalkSpeed = Movementspeed;
+
+	
 
 }
 
@@ -67,6 +72,7 @@ void ACleaner::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAxis("Move_X", this, &ACleaner::Move_X);
 	InputComponent->BindAxis("Move_Y", this, &ACleaner::Move_Y);
 	
+	
 }
 
 void ACleaner::Move_X(float AxisValue)
@@ -75,7 +81,8 @@ void ACleaner::Move_X(float AxisValue)
  	{
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		const FRotator YawRotation(0, Rotation.Yaw + ExtraRotation, 0); //ExtraRotation is added to the player's controls changes, 
+		//found this easier than other methods since it just adds a float value, and can be changed into any direction.
 
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
@@ -92,11 +99,11 @@ void ACleaner::Move_Y(float AxisValue)
 	{
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		const FRotator YawRotation(0, Rotation.Yaw + ExtraRotation, 0);
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
-		AddMovementInput(Direction, AxisValue);
+		AddMovementInput (Direction , AxisValue);
 		MovingY = true;
 	}
 	else
@@ -189,5 +196,21 @@ void ACleaner::SwitchKit()
 		PowerSwitch->Activate();
 	}
 }
+
+/*void ACleaner::ChangeDirection(bool ChangeDir)
+{
+	if (!ChangeDir)
+	{
+		InputComponent->BindAxis("Move_X", this, &ACleaner::Move_Y);
+		InputComponent->BindAxis("Move_Y", this, &ACleaner::Move_X);
+	}
+
+	else if (ChangeDir)
+	{
+		InputComponent->BindAxis("Move_X", this, &ACleaner::Move_X);
+		InputComponent->BindAxis("Move_Y", this, &ACleaner::Move_Y);
+	}
+
+}*/
 
 

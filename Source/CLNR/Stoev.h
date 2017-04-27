@@ -3,7 +3,6 @@
 #pragma once
 
 #include "Gunk.h"
-#include "Cleaner.h"
 #include "Stoev.generated.h"
 
 /**
@@ -20,7 +19,6 @@ protected:
 
 public:
 
-	ACleaner* Player;
 
 	virtual void Tick(float DeltaTime) override;
 	virtual void PlayerInteracting(float DeltaTime) override;
