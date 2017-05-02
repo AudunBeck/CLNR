@@ -4,6 +4,7 @@
 
 #include "GameFramework/Actor.h"
 #include "GunkSpawner.h"
+#include "PowerCable.h"
 #include "PowerSwitch.generated.h"
 
 UCLASS()
@@ -40,6 +41,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		UAnimSequence* AnimOff;
+
+	UPROPERTY(EditAnywhere, Category = "Powered to")
+		TArray<APowerCable*> CableArray;
 	
 	void Activate();
 };

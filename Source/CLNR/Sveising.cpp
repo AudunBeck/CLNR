@@ -2,7 +2,6 @@
 
 #include "CLNR.h"
 #include "Sveising.h"
-#include "GunkSpawner.h"
 #include "Cleaner.h"
 
 
@@ -33,6 +32,11 @@ void ASveising::PlayerDone()
 		{
 			GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
 			Done = true;
+			int32 NumberOfCables = CableArray.Num();
+			for (int i = 0; i < NumberOfCables; i++)
+			{
+				CableArray[i]->CanBePowered = true;
+			}
 		}
 		
 		
