@@ -33,7 +33,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Powered to")
 		AGunkSpawner* TargetActor;
 
-	bool SwitchedOn = true;
+	UPROPERTY(EditAnywhere)
+		bool SwitchedOn = true;
 
 
 	UPROPERTY(EditAnywhere)
