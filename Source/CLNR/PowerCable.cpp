@@ -25,11 +25,11 @@ void APowerCable::SwitchPower(bool GettingPowered)
 {
 	if (CanBePowered && GettingPowered)
 	{
-		OurVisibleComponent->SetMaterial(0, On);
+		OurVisibleComponent->SetMaterial(MaterialToChange, On);
 	}
 	else
 	{
-		OurVisibleComponent->SetMaterial(0, Off);
+		OurVisibleComponent->SetMaterial(MaterialToChange, Off);
 	}
 }
 
