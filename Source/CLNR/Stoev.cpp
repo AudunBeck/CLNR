@@ -2,18 +2,22 @@
 
 #include "CLNR.h"
 #include "Stoev.h"
+#include "Cleaner.h"
 
 
 
 void AStoev::BeginPlay()
 {
 	Super::BeginPlay();
-	Player = Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
 
 void AStoev::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	ACleaner* Player = nullptr;
+	if (Player == nullptr)
+		Player = Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
 	if (Player->Interacting && Player->KitNumber == 2)
 	{

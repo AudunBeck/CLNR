@@ -41,6 +41,12 @@ void APowerSwitch::Activate() // Må skrives om til Polymorfi for KitTest1 og Pow
 		OurVisibleComponent->PlayAnimation(AnimOn, 0);
 		SwitchedOn = false;
 		OurVisibleComponent->SetPosition(0, true);
+		int32 NumberOfCables = CableArray.Num();
+		for (int i = 0; i < NumberOfCables; i++)
+		{
+			CableArray[i]->SwitchPower(false);
+		}
+		
 	}
 		
 	else if (!SwitchedOn)
@@ -48,6 +54,11 @@ void APowerSwitch::Activate() // Må skrives om til Polymorfi for KitTest1 og Pow
 		OurVisibleComponent->PlayAnimation(AnimOff, 0);
 		SwitchedOn = true;
 		OurVisibleComponent->SetPosition(1, true);
+		int32 NumberOfCables = CableArray.Num();
+		for (int i = 0; i < NumberOfCables; i++)
+		{
+			CableArray[i]->SwitchPower(true);
+		}
 
 		if (TargetActor->IsA(AGunkSpawner::StaticClass()) && TargetActor != nullptr)
 		{

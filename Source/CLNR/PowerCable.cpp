@@ -8,21 +8,28 @@
 APowerCable::APowerCable()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+	OurVisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("OurVisibleComponent"));
+	OurVisibleComponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
 void APowerCable::BeginPlay()
 {
 	Super::BeginPlay();
+
+	
 	
 }
 
-// Called every frame
-void APowerCable::Tick(float DeltaTime)
+void APowerCable::SwitchPower(bool GettingPowered)
 {
-	Super::Tick(DeltaTime);
-
+	if (CanBePowered && GettingPowered)
+	{
+		OurVisibleComponent->SetMaterial(0, On);
+	}
+	else
+	{
+		OurVisibleComponent->SetMaterial(0, Off);
+	}
 }
 

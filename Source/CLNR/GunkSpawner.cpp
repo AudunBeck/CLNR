@@ -35,7 +35,7 @@ void AGunkSpawner::BeginPlay()
 		
 }
 
-void AGunkSpawner::Tick(float DeltaTime)
+void AGunkSpawner::Tick(float DeltaTime) // Functions mostly as Gunk does, but alot not needed from there, can go back later to check if it can be connected to it.
 {
 	Super::Tick(DeltaTime);
 
@@ -49,7 +49,7 @@ void AGunkSpawner::Tick(float DeltaTime)
 		{
 			OurAnimatedComponent->SetMaterial(4, Empty);
 			ContainGunk = false;
-			GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->MaxPoints -= 1;
+			GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
 		}
 	}
 
@@ -63,28 +63,29 @@ void AGunkSpawner::PowerOn()
 
 	if (GettingPower && TurnedOn)
 	{
-		if (ContainGunk)
-		{
-			//Spawn gunk in a general area, or reveal it? Must be gone through with group.
+		if (ContainGunk)// If the spawner contains gunk when its activated, it will spawn the amount of gunk its set to have inside it.
+		{ 
 			for (int i = 0; i < GunkAmount; i++)
 			{
 				FVector SpawnLocation = GetActorLocation() + FVector(FMath::FRandRange(RandomRangeBot, RandomRangeTop), FMath::FRandRange(RandomRangeBot, RandomRangeTop), DistanceToFloor);
-				AGunk *tempGunk = World->SpawnActor<AGunk>(GunkBlueprint, SpawnLocation, FRotator::ZeroRotator);
-				OurAnimatedComponent->PlayAnimation(AnimOpen, 1);
-				OurAnimatedComponent->SetMaterial(4, Empty);
+				AGunk *tempGunk = World->SpawnActor<AGunk>(GunkBlueprint, SpawnLocation, FRotator::ZeroRotator);				
 			}
 			ContainGunk = false;
+			GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
+			
+			OurAnimatedComponent->SetMaterial(4, Empty);
 		}
 
 		else
 		{
-
+			
 		}
+		OurAnimatedComponent->PlayAnimation(AnimOpen, 1); //Plays its animation if the power is turned on.
 	}
 
 	else
 	{
-		OurAnimatedComponent->PlayAnimation(AnimOpen, 0);
+		OurAnimatedComponent->PlayAnimation(AnimOpen, 0); //Plays it once more then stops the looping.
 	}
 }
 

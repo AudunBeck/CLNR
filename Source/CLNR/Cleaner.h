@@ -22,7 +22,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
+
+	UPROPERTY(EditAnywhere)
+		USpringArmComponent* SpringArm;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -47,6 +50,9 @@ public:
 
 	UFUNCTION()
 		void EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	float ExtraRotation = 0; //Used for the controller to change while the player is moving.
+
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 		float Kit1MaxValue = 100; //Value er for vann/såpe til mopp.

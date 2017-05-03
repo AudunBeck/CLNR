@@ -14,13 +14,26 @@ public:
 	// Sets default values for this actor's properties
 	APowerCable();
 
+	UPROPERTY(EditAnywhere)
+		UStaticMeshComponent* OurVisibleComponent;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+
+	void SwitchPower(bool GettingPowered);
+
+	UPROPERTY(EditAnywhere, Category = "MatChange")
+		UMaterial* On;
+
+	UPROPERTY(EditAnywhere, Category = "MatChange")
+		UMaterial* Off;
+
+	UPROPERTY(EditAnywhere)
+		bool CanBePowered = false;
+
 
 	
 	

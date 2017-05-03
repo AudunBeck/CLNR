@@ -5,6 +5,7 @@
 #include "Gunk.h"
 #include "GunkSpawner.h"
 #include "PowerSwitch.h"
+#include "PowerCable.h"
 #include "Sveising.generated.h"
 
 /**
@@ -22,6 +23,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Powered to")
 		AGunkSpawner* TargetActor;
 
+	UPROPERTY(EditAnywhere, Category = "Powered to")
+		TArray<APowerCable*> CableArray;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USkeletalMeshComponent* OurAnimatedComponent;
 
@@ -33,6 +37,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		APowerSwitch* ConnectedSwitch;
+
 
 	bool Done = false; //Quick fix.
 	
