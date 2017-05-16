@@ -22,7 +22,12 @@ void ACLNRGameModeBase::ChangePower(float Value)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("You won, script for winning goes here!"));
 		Cast<UMyGameInstance>(GetGameInstance())->GameScore[LevelNumber] = 10;
-		Cast<UMyGameInstance>(GetGameInstance())->HighScore[LevelNumber] = CurrentPower;
+
+		if (CurrentPower > Cast<UMyGameInstance>(GetGameInstance())->HighScore[LevelNumber])
+		{
+			Cast<UMyGameInstance>(GetGameInstance())->HighScore[LevelNumber] = CurrentPower;
+		}
+			
 		UGameplayStatics::OpenLevel(GetWorld(), FName("MainMenu"));
 
 	}
