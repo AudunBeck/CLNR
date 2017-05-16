@@ -34,9 +34,9 @@ void ASveising::PlayerDone()
 			GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
 			Done = true;
 		}
-	}
+	} //Can be removed?
 
-	else if (TargetActor->IsA(AGunkSpawner::StaticClass()))
+	else if (TargetActor->IsA(APoweredItem::StaticClass()))
 	{
 		TargetActor->GettingPower = true;
 		if (!Done)

@@ -13,7 +13,7 @@ class CLNR_API UMyGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 public:
-	int GameScore = 0;
+	int GameScore[3]{ 0,0,0 };
 	
 	
 	

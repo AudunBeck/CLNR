@@ -12,6 +12,7 @@ void ACLNRGameModeBase::ChangePower(float Value)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No Power left!"));
 		UGameplayStatics::OpenLevel(GetWorld(), FName("Cafe"));
+		Cast<UMyGameInstance>(GetGameInstance())->GameScore[LevelNumber] = ceil((CurrentPoints/MaxPoints)*10);
 		return;
 			
 	}
@@ -20,7 +21,7 @@ void ACLNRGameModeBase::ChangePower(float Value)
 	if (CurrentPoints == MaxPoints)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("You won, script for winning goes here!"));
-		Cast<UMyGameInstance>(GetGameInstance())->GameScore += CurrentPoints;
+		Cast<UMyGameInstance>(GetGameInstance())->GameScore[LevelNumber] = 10;
 		UGameplayStatics::OpenLevel(GetWorld(), FName("Cafe"));
 
 	}

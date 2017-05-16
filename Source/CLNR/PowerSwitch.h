@@ -31,7 +31,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, Category = "Powered to")
-		AGunkSpawner* TargetActor;
+		APoweredItem* TargetActor;
 
 	UPROPERTY(EditAnywhere)
 		bool SwitchedOn = true;

@@ -21,7 +21,7 @@ public:
 	ASveising();
 
 	UPROPERTY(EditAnywhere, Category = "Powered to")
-		AGunkSpawner* TargetActor;
+		APoweredItem* TargetActor;
 
 	UPROPERTY(EditAnywhere, Category = "Powered to")
 		TArray<APowerCable*> CableArray;
