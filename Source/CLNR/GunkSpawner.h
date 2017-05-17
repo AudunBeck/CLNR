@@ -3,10 +3,11 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "PoweredItem.h"
 #include "GunkSpawner.generated.h"
 
 UCLASS()
-class CLNR_API AGunkSpawner : public AActor
+class CLNR_API AGunkSpawner : public APoweredItem
 {
 	GENERATED_BODY()
 	
@@ -57,11 +58,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Spawning")
 		bool ContainGunk = true;
 
-	UPROPERTY(EditAnywhere, Category = "Spawning")
-		bool GettingPower = false;
-
-	UPROPERTY(EditAnywhere, Category = "Spawning")
-		bool TurnedOn = false;
 
 	UPROPERTY(EditAnywhere, Category = "TextureChange")
 		UMaterial* Filled;
@@ -70,7 +66,7 @@ public:
 		UMaterial* Empty;
 
 	
-	void PowerOn();
+	virtual void PowerOn() override;
 
 	bool OverlapPlayer = false;
 };

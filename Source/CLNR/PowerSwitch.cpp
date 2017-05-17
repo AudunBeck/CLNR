@@ -60,9 +60,9 @@ void APowerSwitch::Activate() // Må skrives om til Polymorfi for KitTest1 og Pow
 			CableArray[i]->SwitchPower(true);
 		}
 
-		if (TargetActor->IsA(AGunkSpawner::StaticClass()) && TargetActor != nullptr)
+		if (TargetActor->IsA(APoweredItem::StaticClass()))
 		{
-			TargetActor->TurnedOn = !TargetActor->TurnedOn;
+			TargetActor->TurnedOn = true;
 			TargetActor->PowerOn();
 		}
 	}

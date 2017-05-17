@@ -34,7 +34,8 @@ public:
 	UPROPERTY(EditAnywhere)
 		bool CanBePowered = false;
 
-
+	UPROPERTY(EditAnywhere)
+		int MaterialToChange = 0;
 	
 	
 };

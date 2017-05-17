@@ -1,35 +1,28 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CLNR.h"
-#include "PowerCable.h"
+#include "CLNRGameModeBase.h"
+#include "DisapearingBoxes.h"
 
 
 // Sets default values
-APowerCable::APowerCable()
+ADisapearingBoxes::ADisapearingBoxes()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
 	OurVisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("OurVisibleComponent"));
 	OurVisibleComponent->SetupAttachment(RootComponent);
 }
 
-// Called when the game starts or when spawned
-void APowerCable::BeginPlay()
-{
-	Super::BeginPlay();
 
-	
-	
-}
-
-void APowerCable::SwitchPower(bool GettingPowered)
+// Called every frame
+void ADisapearingBoxes::Tick(float DeltaTime)
 {
-	if (CanBePowered && GettingPowered)
+	Super::Tick(DeltaTime);
+	if (GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints >= WhenToRemove)
 	{
-		OurVisibleComponent->SetMaterial(MaterialToChange, On);
+		Destroy();
 	}
-	else
-	{
-		OurVisibleComponent->SetMaterial(MaterialToChange, Off);
-	}
+
 }
 
