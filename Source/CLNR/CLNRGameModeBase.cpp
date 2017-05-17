@@ -20,7 +20,6 @@ void ACLNRGameModeBase::ChangePower(float Value)
 
 	if (CurrentPoints == MaxPoints)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("You won, script for winning goes here!"));
 		Cast<UMyGameInstance>(GetGameInstance())->GameScore[LevelNumber] = 10;
 
 		if (CurrentPower > Cast<UMyGameInstance>(GetGameInstance())->HighScore[LevelNumber])
