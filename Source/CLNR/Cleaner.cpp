@@ -7,7 +7,7 @@
 // Sets default values
 ACleaner::ACleaner()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	bUseControllerRotationPitch = false;
@@ -36,7 +36,7 @@ void ACleaner::BeginPlay()
 	CurrentGameMode->CurrentPower = CurrentGameMode->MaxPower;
 	GetCharacterMovement()->MaxWalkSpeed = Movementspeed;
 
-	
+
 
 }
 
@@ -53,8 +53,18 @@ void ACleaner::Tick(float DeltaTime)
 		CurrentGameMode->ChangePower(DeltaTime);
 	}
 
-	
+	if (!CanMove)
+	{
+		if (TimeAfterEnd <= 0)
+		{
+			UGameplayStatics::OpenLevel(GetWorld(), FName("MainMenu"));
+		}
 		
+		TimeAfterEnd -= DeltaTime;
+	}
+
+
+
 }
 
 // Called to bind functionality to input
@@ -71,14 +81,16 @@ void ACleaner::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	InputComponent->BindAxis("Move_X", this, &ACleaner::Move_X);
 	InputComponent->BindAxis("Move_Y", this, &ACleaner::Move_Y);
-	
-	
+
+
 }
 
 void ACleaner::Move_X(float AxisValue)
 {
-	if ((Controller != NULL) && (AxisValue != 0.0f))
- 	{
+
+
+	if ((Controller != NULL) && (AxisValue != 0.0f) && CanMove)
+	{
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw + ExtraRotation, 0); //ExtraRotation is added to the player's controls changes, 
@@ -92,10 +104,11 @@ void ACleaner::Move_X(float AxisValue)
 	else
 		MovingX = false;
 
+
 }
 void ACleaner::Move_Y(float AxisValue)
 {
-	if ((Controller != NULL) && (AxisValue != 0.0f))
+	if ((Controller != NULL) && (AxisValue != 0.0f) && CanMove)
 	{
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
@@ -103,14 +116,16 @@ void ACleaner::Move_Y(float AxisValue)
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
-		AddMovementInput (Direction , AxisValue);
+		AddMovementInput(Direction, AxisValue);
 		MovingY = true;
 	}
 	else
 		MovingY = false;
 
 }
-void ACleaner::InteractPressed() 
+
+
+void ACleaner::InteractPressed()
 {
 	Interacting = true;
 	GetCharacterMovement()->MaxWalkSpeed = Movementspeed / 2;
@@ -152,7 +167,7 @@ void ACleaner::Kit3()
 		DrainMultiplier = 3;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
 		CurrentGameMode->KitInUse = "Kit3";
-	}	
+	}
 }
 
 
@@ -190,27 +205,11 @@ void ACleaner::SwitchKit()
 	{
 		KitActor->Activate();
 	}
-	
+
 	else if (OnPowerSwitch) //Dette må skrives om til polymorfi.
 	{
 		PowerSwitch->Activate();
 	}
 }
-
-/*void ACleaner::ChangeDirection(bool ChangeDir)
-{
-	if (!ChangeDir)
-	{
-		InputComponent->BindAxis("Move_X", this, &ACleaner::Move_Y);
-		InputComponent->BindAxis("Move_Y", this, &ACleaner::Move_X);
-	}
-
-	else if (ChangeDir)
-	{
-		InputComponent->BindAxis("Move_X", this, &ACleaner::Move_X);
-		InputComponent->BindAxis("Move_Y", this, &ACleaner::Move_Y);
-	}
-
-}*/
 
 

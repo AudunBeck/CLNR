@@ -10,6 +10,7 @@ void ALevelVariables::BeginPlay()
 {
 	Super::BeginPlay();
 	GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->LevelNumber = LevelNumber;
+	GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->TimeToStop = TimeToStop;
 	
 }
 

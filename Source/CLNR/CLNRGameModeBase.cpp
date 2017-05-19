@@ -7,12 +7,13 @@
 
 
 void ACLNRGameModeBase::ChangePower(float Value)
-{
+{	
 	if ((CurrentPower - Value) <= 0)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No Power left!"));
-		UGameplayStatics::OpenLevel(GetWorld(), FName("MainMenu"));
+		
 		Cast<UMyGameInstance>(GetGameInstance())->GameScore[LevelNumber] = ceil((CurrentPoints / MaxPoints) * 10);
+		Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn())->CanMove = false;
 		return;
 
 	}
@@ -26,10 +27,10 @@ void ACLNRGameModeBase::ChangePower(float Value)
 		{
 			Cast<UMyGameInstance>(GetGameInstance())->HighScore[LevelNumber] = CurrentPower;
 		}
-			
-		UGameplayStatics::OpenLevel(GetWorld(), FName("MainMenu"));
+		Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn())->CanMove = false;
 
 	}
 
 }
+
 

@@ -64,6 +64,11 @@ public:
 	AGameModeBase *GameModePointer;
 	int PlaceInArray{ 0 };
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool CanMove = true;
+
+	UPROPERTY(EditAnywhere)
+		float TimeAfterEnd = 3;
 	
 
 protected:
@@ -75,6 +80,7 @@ private:
 	bool MovingY = false;
 	bool OnKitSwitch = false;
 	bool OnPowerSwitch = false;
+	
 	AKitTest1* KitActor;
 	APowerSwitch* PowerSwitch;
 	

@@ -14,6 +14,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		int LevelNumber;
 
+	UPROPERTY(EditAnywhere)
+		float TimeToStop = 3;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
