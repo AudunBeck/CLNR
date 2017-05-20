@@ -19,7 +19,7 @@ ADisapearingBoxes::ADisapearingBoxes()
 void ADisapearingBoxes::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints >= WhenToRemove)
+	if (GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints >= WhenToRemove) //If a certain amount of things are cleaned, desroy itself. Only used in the tutorial (blame art).
 	{
 		Destroy();
 	}

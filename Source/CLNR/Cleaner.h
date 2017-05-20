@@ -72,7 +72,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool CanMove = true;
 
-	bool EndingGame = false;
+	bool EndingLevel = false;
 
 	UPROPERTY(EditAnywhere)
 		float TimeAfterEnd = 3;

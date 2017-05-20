@@ -43,16 +43,16 @@ void ACleaner::BeginPlay()
 void ACleaner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (Interacting)
+	if (Interacting) // While the player is cleaning, drain power.
 	{
 		CurrentGameMode->ChangePower(DeltaTime * DrainMultiplier);
 	}
-	if (MovingX || MovingY)
+	if (MovingX || MovingY) //If the player is moving, drain power.
 	{
 		CurrentGameMode->ChangePower(DeltaTime);
 	}
 
-	if (EndingGame)
+	if (EndingLevel) //When the level is ending, count down, then go back to the main menu.
 	{
 		if (TimeAfterEnd <= 0)
 		{
@@ -73,15 +73,14 @@ void ACleaner::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	InputComponent->BindAction("Interact", IE_Pressed, this, &ACleaner::InteractPressed);
 	InputComponent->BindAction("Interact", IE_Released, this, &ACleaner::InteractReleased);
-	InputComponent->BindAction("Kit1", IE_Pressed, this, &ACleaner::Kit1);
-	InputComponent->BindAction("Kit2", IE_Pressed, this, &ACleaner::Kit2);
-	InputComponent->BindAction("Kit3", IE_Pressed, this, &ACleaner::Kit3);
 	InputComponent->BindAction("KitInteract", IE_Pressed, this, &ACleaner::SwitchKit);
-
 	InputComponent->BindAxis("Move_X", this, &ACleaner::Move_X);
 	InputComponent->BindAxis("Move_Y", this, &ACleaner::Move_Y);
 
-
+	//These are used for testing.
+	InputComponent->BindAction("Kit1", IE_Pressed, this, &ACleaner::Kit1);
+	InputComponent->BindAction("Kit2", IE_Pressed, this, &ACleaner::Kit2);
+	InputComponent->BindAction("Kit3", IE_Pressed, this, &ACleaner::Kit3);
 }
 
 void ACleaner::Move_X(float AxisValue)
@@ -127,7 +126,7 @@ void ACleaner::Move_Y(float AxisValue)
 void ACleaner::InteractPressed()
 {
 	Interacting = true;
-	GetCharacterMovement()->MaxWalkSpeed = Movementspeed / 2;
+	GetCharacterMovement()->MaxWalkSpeed = Movementspeed / 2; //While the player is interacting, halve the movementspeed.
 }
 void ACleaner::InteractReleased()
 {
@@ -137,8 +136,8 @@ void ACleaner::InteractReleased()
 
 void ACleaner::Kit1()
 {
-	if (!Interacting && KitNumber != 1)
-	{
+	if (!Interacting && KitNumber != 1)//If the player is not interacting and the kitnumber is not already the same kit (for stability reasons)
+	{ //switch it to the right kit, and change values ascosiated with it.
 		KitNumber = 1;
 		DrainMultiplier = 2;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
@@ -150,8 +149,8 @@ void ACleaner::Kit1()
 
 void ACleaner::Kit2()
 {
-	if (!Interacting && KitNumber != 2)
-	{
+	if (!Interacting && KitNumber != 2)//If the player is not interacting and the kitnumber is not already the same kit (for stability reasons)
+	{ //switch it to the right kit, and change values ascosiated with it.
 		KitNumber = 2;
 		DrainMultiplier = 2;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
@@ -160,8 +159,8 @@ void ACleaner::Kit2()
 }
 void ACleaner::Kit3()
 {
-	if (!Interacting && KitNumber != 3)
-	{
+	if (!Interacting && KitNumber != 3)//If the player is not interacting and the kitnumber is not already the same kit (for stability reasons)
+	{ //switch it to the right kit, and change values ascosiated with it.
 		KitNumber = 3;
 		DrainMultiplier = 3;
 		UE_LOG(LogTemp, Warning, TEXT("Kit set to %i"), KitNumber);
@@ -188,12 +187,12 @@ void ACleaner::EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 {
 	if (OtherActor->IsA(AKitTest1::StaticClass()))
 	{
-		KitActor = nullptr;
+		KitActor = nullptr; //Setter kit actor og kit switch til nullptr og false, slik at den ikke interacter.
 		OnKitSwitch = false;
 	}
 	else if (OtherActor->IsA(APowerSwitch::StaticClass()))
 	{
-		PowerSwitch = nullptr;
+		PowerSwitch = nullptr; //Samme som over, men med powerswitch.
 		OnPowerSwitch = false;
 	}
 }
@@ -205,7 +204,7 @@ void ACleaner::SwitchKit()
 		KitActor->Activate();
 	}
 
-	else if (OnPowerSwitch) //Dette må skrives om til polymorfi.
+	else if (OnPowerSwitch) //Dette kan skrives om til polymorfi.
 	{
 		PowerSwitch->Activate();
 	}

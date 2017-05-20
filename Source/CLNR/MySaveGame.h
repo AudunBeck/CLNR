@@ -13,7 +13,7 @@ class CLNR_API UMySaveGame : public USaveGame
 {
 	GENERATED_BODY()
 public:
-	
+	 //Save game, just contains the points.
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 		int GameScore[3];
 

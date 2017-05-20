@@ -20,7 +20,7 @@ void AStoev::Tick(float DeltaTime)
 		Player = Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
 	if (Player->Interacting && Player->KitNumber == 2)
-	{
+	{										//If the player interacts and is using kit 2 (the vacuum), the dust will move closer to the player.
 		FVector Location = this->GetActorLocation();
 		FVector PlayerLocation = Player->GetActorLocation();
 		FVector DistanceThisToPlayer = Location - PlayerLocation;
@@ -35,9 +35,4 @@ void AStoev::Tick(float DeltaTime)
 	}	
 }
 
-void AStoev::PlayerInteracting(float DeltaTime)
-{
-	GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
-	Destroy();
-}
 

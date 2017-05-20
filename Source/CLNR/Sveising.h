@@ -29,13 +29,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USkeletalMeshComponent* OurAnimatedComponent;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Powered to")
 		UAnimSequence* AnimOpen;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Powered to")
 		UAnimSequence* AnimClosed;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Powered to")
 		APowerSwitch* ConnectedSwitch;
 
 

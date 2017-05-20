@@ -13,13 +13,13 @@ class CLNR_API UMyGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 public:
-	int GameScore[3]{ 0,0,0 };
-	float HighScore[3]{ 0,0,0 };
+	int GameScore[3]{ 0,0,0 }; //Keeps the score per level.
+	float HighScore[3]{ 0,0,0 }; //Keeps the Highscore (if the player cleans everything this is the power the player had left).
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable) //Makes the function callable in blueprint
 		void LoadSaveGame();
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable) //Makes the function callable in blueprint
 		void SaveGame();
 	
 };

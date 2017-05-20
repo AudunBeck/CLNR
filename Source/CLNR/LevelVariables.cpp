@@ -6,7 +6,7 @@
 
 
 // Called when the game starts or when spawned
-void ALevelVariables::BeginPlay()
+void ALevelVariables::BeginPlay()//Sets different variables in the level.
 {
 	Super::BeginPlay();
 	ACLNRGameModeBase* GameMode = GetWorld()->GetAuthGameMode<ACLNRGameModeBase>();

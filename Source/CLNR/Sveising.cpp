@@ -19,6 +19,11 @@ void ASveising::PlayerInteracting(float DeltaTime)
 	{
 		TimeLeft -= DeltaTime;
 		OurVisibleComponent->SetWorldScale3D(FVector(TimeLeft / TotalTime, TimeLeft / TotalTime, TimeLeft / TotalTime));
+
+		if (TimeLeft <= TotalTime / 10)
+		{
+			PlayerDone();
+		}
 	}
 
 
@@ -26,25 +31,15 @@ void ASveising::PlayerInteracting(float DeltaTime)
 
 void ASveising::PlayerDone()
 {
-	if (TargetActor == nullptr)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Found no target actor on Sveising %i"), 0);
-		if (!Done)
-		{
-			GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
-			Done = true;
-		}
-	} //Can be removed?
-
-	else if (TargetActor->IsA(APoweredItem::StaticClass()))
+	if (TargetActor->IsA(APoweredItem::StaticClass()))
 	{
 		TargetActor->GettingPower = true;
 		if (!Done)
 		{
 			GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
 			Done = true;
-			int32 NumberOfCables = CableArray.Num();
-			for (int i = 0; i < NumberOfCables; i++)
+			int32 NumberOfCables = CableArray.Num(); //When the object is done, change variables in the things this is connected to.
+			for (int i = 0; i < NumberOfCables; i++) 
 			{
 				CableArray[i]->CanBePowered = true;
 			}
@@ -55,11 +50,7 @@ void ASveising::PlayerDone()
 
 void ASveising::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	if (ConnectedSwitch == nullptr)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Found no target actor on Sveising, for Switch!%i"), 0);
-	}
-	else if (OtherActor->IsA(ACleaner::StaticClass()) && !ConnectedSwitch->SwitchedOn)
+	if (OtherActor->IsA(ACleaner::StaticClass()) && !ConnectedSwitch->SwitchedOn)//Also plays an animation, so has to be different than gunk's.
 	{
 		OverlapPlayer = true;
 		OurAnimatedComponent->PlayAnimation(AnimOpen, 0);
@@ -70,18 +61,10 @@ void ASveising::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *Othe
 void ASveising::EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 
-	if (OtherActor->IsA(ACleaner::StaticClass()) && !ConnectedSwitch->SwitchedOn)
+	if (OtherActor->IsA(ACleaner::StaticClass()) && !ConnectedSwitch->SwitchedOn) //Also plays an animation, so has to be different than gunk's.
 	{
 		OverlapPlayer = false;
 		OurAnimatedComponent->PlayAnimation(AnimClosed, 0);
 		OurAnimatedComponent->SetPosition(1, true);
 	}
-
-	else if (ConnectedSwitch == nullptr || TargetActor == nullptr)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Missing ConnectedSwitch or TargetActor%i"), 0);
-	}
-
-
-
 }

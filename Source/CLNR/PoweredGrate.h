@@ -27,6 +27,9 @@ public:
 		float Speed = 10;
 
 	UPROPERTY(EditAnywhere)
+		float WhereToMove = -300;
+
+	UPROPERTY(EditAnywhere)
 		USceneComponent* OurVisibleComponent;
 	
 };
