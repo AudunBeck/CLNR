@@ -41,9 +41,14 @@ public:
 	void Kit2();
 	void Kit3();
 	void SwitchKit();
-	int KitNumber;
+
+	UPROPERTY(BlueprintReadOnly)
+		int KitNumber;
+
 	float DrainMultiplier = 1;
-	bool Interacting = false;
+
+	UPROPERTY(BlueprintReadOnly)
+		bool Interacting = false;
 
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
