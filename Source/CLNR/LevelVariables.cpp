@@ -9,8 +9,10 @@
 void ALevelVariables::BeginPlay()
 {
 	Super::BeginPlay();
-	GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->LevelNumber = LevelNumber;
-	GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->TimeToStop = TimeToStop;
-	
+	ACLNRGameModeBase* GameMode = GetWorld()->GetAuthGameMode<ACLNRGameModeBase>();
+	GameMode->LevelNumber = LevelNumber;
+	GameMode->TimeToStop = TimeToStop;
+	GameMode->MaxPower = StartingPower;
+	GameMode->CurrentPower = GameMode->MaxPower;
 }
 

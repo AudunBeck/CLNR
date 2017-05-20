@@ -14,6 +14,7 @@ void ACLNRGameModeBase::ChangePower(float Value)
 		
 		Cast<UMyGameInstance>(GetGameInstance())->GameScore[LevelNumber] = ceil((CurrentPoints / MaxPoints) * 10);
 		Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn())->CanMove = false;
+		Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn())->EndingGame = true;
 		return;
 
 	}
@@ -28,6 +29,7 @@ void ACLNRGameModeBase::ChangePower(float Value)
 			Cast<UMyGameInstance>(GetGameInstance())->HighScore[LevelNumber] = CurrentPower;
 		}
 		Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn())->CanMove = false;
+		Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn())->EndingGame = true;
 
 	}
 

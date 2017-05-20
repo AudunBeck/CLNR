@@ -33,7 +33,6 @@ void ACleaner::BeginPlay()
 {
 	Super::BeginPlay();
 	CurrentGameMode = GetWorld()->GetAuthGameMode<ACLNRGameModeBase>();
-	CurrentGameMode->CurrentPower = CurrentGameMode->MaxPower;
 	GetCharacterMovement()->MaxWalkSpeed = Movementspeed;
 
 
@@ -53,7 +52,7 @@ void ACleaner::Tick(float DeltaTime)
 		CurrentGameMode->ChangePower(DeltaTime);
 	}
 
-	if (!CanMove)
+	if (EndingGame)
 	{
 		if (TimeAfterEnd <= 0)
 		{

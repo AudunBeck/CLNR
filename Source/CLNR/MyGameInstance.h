@@ -16,6 +16,10 @@ public:
 	int GameScore[3]{ 0,0,0 };
 	float HighScore[3]{ 0,0,0 };
 	
+	UFUNCTION(BlueprintCallable)
+		void LoadSaveGame();
 	
+	UFUNCTION(BlueprintCallable)
+		void SaveGame();
 	
 };

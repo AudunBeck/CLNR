@@ -17,6 +17,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		float TimeToStop = 3;
 
+	UPROPERTY(EditAnywhere)
+		float StartingPower = 100;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
