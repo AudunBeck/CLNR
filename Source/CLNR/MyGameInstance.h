@@ -21,5 +21,11 @@ public:
 	
 	UFUNCTION(BlueprintCallable) //Makes the function callable in blueprint
 		void SaveGame();
+
+	UFUNCTION(BlueprintCallable)
+		int GetGameScore(int Slot);
+
+	UFUNCTION(BlueprintCallable)
+		float GetHighScore(int Slot);
 	
 };

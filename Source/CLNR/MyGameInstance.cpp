@@ -26,4 +26,15 @@ void UMyGameInstance::SaveGame() //Saves a savegame.
 	}
 }
 
+int UMyGameInstance::GetGameScore(int Slot) //Had to be used so that blueprints could get the scores from the array.
+{
+	return GameScore[Slot];
+}
+
+float UMyGameInstance::GetHighScore(int Slot)
+{
+	return HighScore[Slot];
+}
+
+
 
