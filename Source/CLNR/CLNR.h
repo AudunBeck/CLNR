@@ -3,4 +3,6 @@
 #pragma once
 
 #include "Engine.h"
+#include "MySaveGame.h"
+#include "Kismet/GameplayStatics.h"
 

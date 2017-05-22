@@ -1,8 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CLNR.h"
-#include "MySaveGame.h"
-#include "Kismet/GameplayStatics.h"
 #include "MyGameInstance.h"
 
 void UMyGameInstance::LoadSaveGame() //Loads a save game, if none was found it makes a new one.
