@@ -10,6 +10,7 @@ ASveising::ASveising()
 {
 	OurAnimatedComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("OurAnimatedComponent"));
 	OurAnimatedComponent->SetupAttachment(RootComponent);
+	
 }
 
 void ASveising::PlayerInteracting(float DeltaTime)
@@ -18,7 +19,6 @@ void ASveising::PlayerInteracting(float DeltaTime)
 	if (!Done)
 	{
 		TimeLeft -= DeltaTime;
-		OurVisibleComponent->SetWorldScale3D(FVector(TimeLeft / TotalTime, TimeLeft / TotalTime, TimeLeft / TotalTime));
 
 		if (TimeLeft <= TotalTime / 10)
 		{
@@ -38,6 +38,7 @@ void ASveising::PlayerDone()
 		{
 			GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
 			Done = true;
+			OurParticleComponent->DeactivateSystem();
 			int32 NumberOfCables = CableArray.Num(); //When the object is done, change variables in the things this is connected to.
 			for (int i = 0; i < NumberOfCables; i++) 
 			{

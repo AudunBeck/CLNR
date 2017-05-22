@@ -37,6 +37,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		float TimeLeft = 2;
 
+	UPROPERTY(EditAnywhere)
+		UParticleSystemComponent* OurParticleComponent;
+
 	float TotalTime;
 
 	UPROPERTY(EditAnywhere)

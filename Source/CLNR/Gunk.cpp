@@ -22,6 +22,9 @@ AGunk::AGunk()
 	Cast<UShapeComponent>(RootComponent)->OnComponentBeginOverlap.AddDynamic(this, &AGunk::OnOverlap);
 	Cast<UShapeComponent>(RootComponent)->OnComponentEndOverlap.AddDynamic(this, &AGunk::EndOnOverlap);
 
+	OurParticleComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("OurParticleComponent"));
+	OurParticleComponent->SetupAttachment(RootComponent);
+
 }
 
 // Called when the game starts or when spawned
