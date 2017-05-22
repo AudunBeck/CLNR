@@ -8,7 +8,7 @@
 ACameraRotator::ACameraRotator()
 {
 	PrimaryActorTick.bCanEverTick = true;
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
 	RootComponent = BoxComponent;
 
@@ -21,37 +21,42 @@ ACameraRotator::ACameraRotator()
 void ACameraRotator::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (Rotating == true)
+	if (Player)
 	{
-		if (Inside)//If the player is inside the rotating area, starts rotating the spring arm (with the camera) to the rotation set in the editor.
+		if (Player->EndingLevel)
+			Destroy();
+
+		if (Rotating == true)
 		{
-			if (Player->SpringArm->RelativeRotation.Yaw <= WhereToRotate)
+			if (Inside)//If the player is inside the rotating area, starts rotating the spring arm (with the camera) to the rotation set in the editor.
 			{
-				Player->SpringArm->RelativeRotation.Yaw += DeltaTime * CameraRotationSpeed;
+				if (Player->SpringArm->RelativeRotation.Yaw <= WhereToRotate)
+				{
+					Player->SpringArm->RelativeRotation.Yaw += DeltaTime * CameraRotationSpeed;
+				}
+				else if (Player->SpringArm->RelativeRotation.Yaw >= WhereToRotate)
+				{
+					Player->SpringArm->RelativeRotation.Yaw = WhereToRotate;
+					Rotating = false;
+				}
 			}
-			else if (Player->SpringArm->RelativeRotation.Yaw >= WhereToRotate)
+
+			else if (!Inside) //If the players leaves the area, resets it back to 0, at the same speed as the other.
 			{
-				Player->SpringArm->RelativeRotation.Yaw = WhereToRotate;
-				Rotating = false;
+				if (Player->SpringArm->RelativeRotation.Yaw >= WhereToRotate)
+				{
+					Player->SpringArm->RelativeRotation.Yaw -= DeltaTime * CameraRotationSpeed;
+				}
+				else if (Player->SpringArm->RelativeRotation.Yaw <= WhereToRotate)
+				{
+					Player->SpringArm->RelativeRotation.Yaw = WhereToRotate;
+					Rotating = false;
+				}
 			}
+
 		}
 
-		else if (!Inside) //If the players leaves the area, resets it back to 0, at the same speed as the other.
-		{
-			if (Player->SpringArm->RelativeRotation.Yaw >= WhereToRotate)
-			{
-				Player->SpringArm->RelativeRotation.Yaw -= DeltaTime * CameraRotationSpeed;
-			}
-			else if (Player->SpringArm->RelativeRotation.Yaw <= WhereToRotate)
-			{
-				Player->SpringArm->RelativeRotation.Yaw = WhereToRotate;
-				Rotating = false;
-			}
-		}
-		
 	}
-
 }
 
 void ACameraRotator::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
@@ -63,7 +68,7 @@ void ACameraRotator::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor 
 		WhereToRotate = Rotation;
 		Player->ExtraRotation = Rotation;
 		Inside = true;
-		
+
 	}
 }
 
