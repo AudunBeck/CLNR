@@ -15,10 +15,10 @@ class CLNR_API UMySaveGame : public USaveGame
 public:
 	 //Save game, just contains the points.
 	UPROPERTY(VisibleAnywhere, Category = Basic)
-		int GameScore[3];
+		int GameScore[5];
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
-		float HighScore[3];
+		float HighScore[5];
 	
 	
 };

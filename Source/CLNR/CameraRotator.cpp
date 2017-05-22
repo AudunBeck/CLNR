@@ -30,27 +30,57 @@ void ACameraRotator::Tick(float DeltaTime)
 		{
 			if (Inside)//If the player is inside the rotating area, starts rotating the spring arm (with the camera) to the rotation set in the editor.
 			{
-				if (Player->SpringArm->RelativeRotation.Yaw <= WhereToRotate)
+				if (Rotation < 0)
 				{
-					Player->SpringArm->RelativeRotation.Yaw += DeltaTime * CameraRotationSpeed;
+					if (Player->SpringArm->RelativeRotation.Yaw >= WhereToRotate)
+					{
+						Player->SpringArm->RelativeRotation.Yaw -= DeltaTime * CameraRotationSpeed;
+					}
+					else if (Player->SpringArm->RelativeRotation.Yaw <= WhereToRotate)
+					{
+						Player->SpringArm->RelativeRotation.Yaw = WhereToRotate;
+						Rotating = false;
+					}
 				}
-				else if (Player->SpringArm->RelativeRotation.Yaw >= WhereToRotate)
+				else if (Rotation > 0)
 				{
-					Player->SpringArm->RelativeRotation.Yaw = WhereToRotate;
-					Rotating = false;
+					if (Player->SpringArm->RelativeRotation.Yaw <= WhereToRotate)
+					{
+						Player->SpringArm->RelativeRotation.Yaw += DeltaTime * CameraRotationSpeed;
+					}
+					else if (Player->SpringArm->RelativeRotation.Yaw >= WhereToRotate)
+					{
+						Player->SpringArm->RelativeRotation.Yaw = WhereToRotate;
+						Rotating = false;
+					}
 				}
 			}
 
 			else if (!Inside) //If the players leaves the area, resets it back to 0, at the same speed as the other.
 			{
-				if (Player->SpringArm->RelativeRotation.Yaw >= WhereToRotate)
+				if (Rotation < 0)
 				{
-					Player->SpringArm->RelativeRotation.Yaw -= DeltaTime * CameraRotationSpeed;
+					if (Player->SpringArm->RelativeRotation.Yaw <= WhereToRotate)
+					{
+						Player->SpringArm->RelativeRotation.Yaw += DeltaTime * CameraRotationSpeed;
+					}
+					else if (Player->SpringArm->RelativeRotation.Yaw >= WhereToRotate)
+					{
+						Player->SpringArm->RelativeRotation.Yaw = WhereToRotate;
+						Rotating = false;
+					}
 				}
-				else if (Player->SpringArm->RelativeRotation.Yaw <= WhereToRotate)
+				else if (Rotation > 0)
 				{
-					Player->SpringArm->RelativeRotation.Yaw = WhereToRotate;
-					Rotating = false;
+					if (Player->SpringArm->RelativeRotation.Yaw >= WhereToRotate)
+					{
+						Player->SpringArm->RelativeRotation.Yaw -= DeltaTime * CameraRotationSpeed;
+					}
+					else if (Player->SpringArm->RelativeRotation.Yaw <= WhereToRotate)
+					{
+						Player->SpringArm->RelativeRotation.Yaw = WhereToRotate;
+						Rotating = false;
+					}
 				}
 			}
 
