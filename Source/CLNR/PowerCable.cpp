@@ -23,7 +23,7 @@ void APowerCable::BeginPlay()
 
 void APowerCable::SwitchPower(bool GettingPowered)
 {
-	if (CanBePowered && GettingPowered)
+	if (CanBePowered && GettingPowered) //If it is getting power, change the material to the one to show when "on".
 	{
 		OurVisibleComponent->SetMaterial(MaterialToChange, On);
 	}

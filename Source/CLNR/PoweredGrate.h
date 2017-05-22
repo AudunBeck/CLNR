@@ -16,7 +16,7 @@ public:
 	APoweredGrate();
 
 private:
-	float MovePoint = 0;
+	FVector MovePoint;
 		
 public:
 
@@ -27,6 +27,11 @@ public:
 		float Speed = 10;
 
 	UPROPERTY(EditAnywhere)
+		FVector WhereToMove;
+
+	UPROPERTY(EditAnywhere)
 		USceneComponent* OurVisibleComponent;
 	
+	UPROPERTY(EditAnywhere)
+		int Direction; // 1 is X, 2 is Y and 3 is Z
 };

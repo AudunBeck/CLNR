@@ -32,11 +32,11 @@ void APowerSwitch::Tick(float DeltaTime)
 
 }
 
-void APowerSwitch::Activate() // Må skrives om til Polymorfi for KitTest1 og PowerSwitch
+void APowerSwitch::Activate() // Kan skrives om til Polymorfi for KitTest1 og PowerSwitch
 {
 	UE_LOG(LogTemp, Warning, TEXT("Using PowerSwitch %i"), 0);
 
-	if (SwitchedOn)
+	if (SwitchedOn) //If the switch is powered on, turn it off. And all the assosciated objects.
 	{
 		OurVisibleComponent->PlayAnimation(AnimOn, 0);
 		SwitchedOn = false;
@@ -49,7 +49,7 @@ void APowerSwitch::Activate() // Må skrives om til Polymorfi for KitTest1 og Pow
 		
 	}
 		
-	else if (!SwitchedOn)
+	else if (!SwitchedOn) //If the switch is powered off, turn it on. And all the assosciated objects.
 	{
 		OurVisibleComponent->PlayAnimation(AnimOff, 0);
 		SwitchedOn = true;

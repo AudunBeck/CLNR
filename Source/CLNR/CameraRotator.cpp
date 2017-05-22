@@ -24,7 +24,7 @@ void ACameraRotator::Tick(float DeltaTime)
 
 	if (Rotating == true)
 	{
-		if (Inside)
+		if (Inside)//If the player is inside the rotating area, starts rotating the spring arm (with the camera) to the rotation set in the editor.
 		{
 			if (Player->SpringArm->RelativeRotation.Yaw <= WhereToRotate)
 			{
@@ -37,7 +37,7 @@ void ACameraRotator::Tick(float DeltaTime)
 			}
 		}
 
-		else if (!Inside)
+		else if (!Inside) //If the players leaves the area, resets it back to 0, at the same speed as the other.
 		{
 			if (Player->SpringArm->RelativeRotation.Yaw >= WhereToRotate)
 			{

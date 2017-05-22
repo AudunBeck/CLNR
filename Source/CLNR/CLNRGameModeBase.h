@@ -38,8 +38,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 		FString KitInUse = "No Kit";
 
+	float TimeToStop;
 	int LevelNumber;
 
 	void ChangePower(float Value);
+
 
 };

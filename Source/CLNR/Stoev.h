@@ -21,7 +21,6 @@ public:
 
 
 	virtual void Tick(float DeltaTime) override;
-	virtual void PlayerInteracting(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere)
 		float DistanceNeeded = 150;

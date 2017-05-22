@@ -31,7 +31,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, Category = "Powered to")
-		APoweredItem* TargetActor;
+		APoweredItem* TargetActor; //What powered item this powers.
 
 	UPROPERTY(EditAnywhere)
 		bool SwitchedOn = true;
@@ -44,7 +44,7 @@ public:
 		UAnimSequence* AnimOff;
 
 	UPROPERTY(EditAnywhere, Category = "Powered to")
-		TArray<APowerCable*> CableArray;
+		TArray<APowerCable*> CableArray; //Keeps an array of all the cables that this interacts with.
 	
 	void Activate();
 };

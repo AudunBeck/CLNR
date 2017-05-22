@@ -25,7 +25,7 @@ public:
 
 	void SwitchPower(bool GettingPowered);
 
-	UPROPERTY(EditAnywhere, Category = "MatChange")
+	UPROPERTY(EditAnywhere, Category = "MatChange") //Stores the material it should.
 		UMaterial* On;
 
 	UPROPERTY(EditAnywhere, Category = "MatChange")
@@ -34,7 +34,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		bool CanBePowered = false;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere) //What material to change, had to be added because of inconsistency of what material to change when powered.
 		int MaterialToChange = 0;
 	
 	

@@ -26,7 +26,7 @@ void APoweredItem::Tick(float DeltaTime)
 
 }
 
-void APoweredItem::PowerOn()
+void APoweredItem::PowerOn()//A base for all the items that can be powered by a switch. (Spawners and doors)
 {
 
 }

@@ -12,8 +12,6 @@ AGunk::AGunk()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 	RootComponent = SphereComponent;
 
@@ -30,9 +28,9 @@ AGunk::AGunk()
 void AGunk::BeginPlay()
 {
 	Super::BeginPlay();
-	TimeLeft = TimeLeft*1.1;
+	TimeLeft = TimeLeft*1.1; // Gives the mesh 10% more time, this is to make it Destroy() when its sized 10%.
 	TotalTime = TimeLeft;
-	GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->MaxPoints += 1;
+	GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->MaxPoints += 1; //Adds a point that needs to be taken, done here so that each gunk adds one point.
 	OurVisibleComponent->SetWorldScale3D(FVector(TimeLeft / TotalTime, TimeLeft / TotalTime, TimeLeft / TotalTime));
 }
 
@@ -47,17 +45,14 @@ void AGunk::Tick(float DeltaTime)
 		if (Player == nullptr)
 			Player = Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
-		if (Player->Interacting == true && Player->KitNumber == Type)
+		if (Player->Interacting == true && Player->KitNumber == Type) //If the player interacts with the right kit
 		{
 			PlayerInteracting(DeltaTime);
 		}
 	}
 
 
-	if (TimeLeft <= TotalTime/10)
-	{
-		PlayerDone();
-	}
+	
 	
 }
 
@@ -79,14 +74,19 @@ void AGunk::EndOnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 
 }
 
-void AGunk::PlayerInteracting(float DeltaTime)
+void AGunk::PlayerInteracting(float DeltaTime) //When the player is interacting with the Gunk, remove time from timeleft, and shrink.
 {
 	TimeLeft -= DeltaTime;
 	OurVisibleComponent->SetWorldScale3D(FVector(TimeLeft / TotalTime, TimeLeft / TotalTime, TimeLeft / TotalTime));
+
+	if (TimeLeft <= TotalTime / 10)
+	{
+		PlayerDone();
+	}
 	
 }
 
-void AGunk::PlayerDone()
+void AGunk::PlayerDone() // Add a point to current points, and destroy itself.
 {
 	GetWorld()->GetAuthGameMode<ACLNRGameModeBase>()->CurrentPoints += 1;
 	Destroy();

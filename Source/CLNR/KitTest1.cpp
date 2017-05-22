@@ -9,7 +9,7 @@
 // Sets default values
 AKitTest1::AKitTest1()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
@@ -24,7 +24,7 @@ AKitTest1::AKitTest1()
 void AKitTest1::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
@@ -38,17 +38,18 @@ void AKitTest1::Activate()
 {
 	ACleaner* Player = Cast<ACleaner>(GetWorld()->GetFirstPlayerController()->GetCharacter());
 
-	if (KitChange == 1)
-		Player->Kit1();
-
-	else if (KitChange == 2)
-		Player->Kit2();
-
-	else if (KitChange == 3)
-		Player->Kit3();
-
-	else
+	switch (KitChange) //Changes the kit of the player to the number this kit is.
 	{
-		UE_LOG(LogTemp, Warning, TEXT("ERROR: Kit set to %i, this does not exist."), KitChange);
+
+	case 1:
+		Player->Kit1();
+		break;
+	case 2:
+		Player->Kit2();
+		break;
+	case 3:
+		Player->Kit3();
+		break;
 	}
+
 }
