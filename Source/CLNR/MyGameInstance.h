@@ -29,5 +29,8 @@ public:
 		float GetHighScore(int Slot);
 
 	CLNRSaveGame* SaveGameInstance = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Should show hud...")
+	bool ShouldShowHud = true;
 	
 };
