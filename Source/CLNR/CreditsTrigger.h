@@ -27,24 +27,31 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	//Reference to the player character	
 	UPROPERTY(EditAnywhere)
 	AActor* Character;
 
+	//Global variable to the sequence player so it is accessible from anywhere
 	ULevelSequencePlayer* SequencePlayer;
 
+	//Reference to the sequence camera
 	UPROPERTY(EditAnywhere)
 	AActor* CameraActor;
 
+	//Referance to the sequence character
 	UPROPERTY(EditAnywhere)
 	AActor* StaticActor;
 
+	//Total wait time, can be changed in the editor
 	UPROPERTY(EditAnywhere)
 	float TimeToTwitchToMainMenu = 40.0f;
 
+	//Count the amount of seconds passed
 	float WaitTimer = 0.f;
 
+	//Keep track of if the sequence is playing or not
 	bool isPlaying = false;
 
+	//Referance to game instance
 	UMyGameInstance* GameInstance = nullptr;
 };

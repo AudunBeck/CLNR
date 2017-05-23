@@ -30,6 +30,7 @@ public:
 
 	CLNRSaveGame* SaveGameInstance = nullptr;
 
+	//Make this visible in blueprint so the HUD widget knows if it should be visible or not
 	UPROPERTY(BlueprintReadWrite, Category = "Should show hud...")
 	bool ShouldShowHud = true;
 	

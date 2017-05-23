@@ -6,6 +6,7 @@ public class CLNR : ModuleRules
 {
 	public CLNR(TargetInfo Target)
 	{
+        //This is to add header visibility for all classes and files
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "LevelSequence", "MovieScene" });
 
 
