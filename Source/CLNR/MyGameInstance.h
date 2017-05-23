@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Engine/GameInstance.h"
+#include "CLNRSaveGame.h"
 #include "MyGameInstance.generated.h"
 
 /**
@@ -12,13 +13,12 @@ UCLASS()
 class CLNR_API UMyGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
+		
 public:
+	UMyGameInstance();
 	float GameScore[5]{ 0,0,0,0,0 }; //Keeps the score per level.
 	float HighScore[5]{ 0,0,0,0,0 }; //Keeps the Highscore (if the player cleans everything this is the power the player had left).
-	
-	UFUNCTION(BlueprintCallable) //Makes the function callable in blueprint
-		void LoadSaveGame();
-	
+		
 	UFUNCTION(BlueprintCallable) //Makes the function callable in blueprint
 		void SaveGame();
 
@@ -27,5 +27,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		float GetHighScore(int Slot);
+
+	CLNRSaveGame* SaveGameInstance = nullptr;
 	
 };
