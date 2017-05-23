@@ -23,6 +23,9 @@ public:
 		float RotationSpeed = 100;
 
 	UPROPERTY(EditAnywhere)
+		FRotator Direction;
+
+	UPROPERTY(EditAnywhere)
 		USceneComponent* OurVisibleComponent;
 
 	
