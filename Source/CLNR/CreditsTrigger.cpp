@@ -21,7 +21,7 @@ void UCreditsTrigger::BeginPlay()
 	Super::BeginPlay();
 
 	//Load Level Sequence from file
-	FStringAssetReference SequenceName("/Game/LastLevelSequence.LastLevelSequence");
+	FStringAssetReference SequenceName("/Game/Meshes/Animations/LastLevelSequence.LastLevelSequence");
 	ULevelSequence* Asset = Cast<ULevelSequence>(SequenceName.TryLoad());
 	FMovieSceneSequencePlaybackSettings Settings;
 	//Create the sequence player instance from asset
