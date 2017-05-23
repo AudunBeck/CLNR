@@ -21,7 +21,8 @@ void ABackgroundShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	FRotator CurrentRotation = GetActorRotation();
-	FRotator AddedRotation = FRotator(0, 0, DeltaTime*RotationSpeed);
+	FRotator AddedRotation;
+	AddedRotation = (Direction * DeltaTime) * RotationSpeed;
 	SetActorRotation(CurrentRotation + AddedRotation);
 }
 
