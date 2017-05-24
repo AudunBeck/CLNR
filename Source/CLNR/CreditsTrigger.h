@@ -44,7 +44,7 @@ public:
 
 	//Total wait time, can be changed in the editor
 	UPROPERTY(EditAnywhere)
-	float TimeToTwitchToMainMenu = 40.0f;
+	float TimeToTwitchToMainMenu = 60.0f;
 
 	//Count the amount of seconds passed
 	float WaitTimer = 0.f;
